@@ -64,17 +64,18 @@ class dbconnect:
 			sys.exit (1)
 
 	#Add stats data for the specified team, including incoming bytes, outgoing bytes, and total outgoing bytes since starting trafficStats
-	def addStats(self, timestamp, teamName, incoming, outgoing, total_outgoing):
-		print timestamp
-		print teamName
-		print incoming
-		print outgoing
-		print total_outgoing
+	def addStats(self, timestamp, teamName, incoming, outgoing, total_outgoing, total_incoming):
+		#print timestamp
+		#print teamName
+		#print incoming
+		#print outgoing
+		#print total_outgoing
+		#print total_incoming
 		try:
 			#Get cursor for query execution
 			cursor = self.conn.cursor ()
 
-			query = "INSERT INTO traffic_stats (traffic_timestamp, team_name, incoming, outgoing, total_traffic) VALUES (" + str(timestamp) + ",\"" + teamName + "\"," + str(incoming) + "," + str(outgoing) + "," + str(total_outgoing) + " );" 
+			query = "INSERT INTO traffic_stats (traffic_timestamp, team_name, incoming, outgoing, total_traffic) VALUES (" + str(timestamp) + ",\"" + teamName + "\"," + str(incoming) + "," + str(outgoing) + "," + str(total_outgoing) + "," + str(total_incoming) + " );" 
 			
 			#Insert into Stats table with given information.
 			print query
