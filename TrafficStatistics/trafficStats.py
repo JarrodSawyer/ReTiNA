@@ -56,7 +56,7 @@ def createTeamStatsList(team_info):
 	
 	team_stats = [];		#list containing team_name, incoming packets, and outgoing packets
 	for item in team_info:
-		team_stats.append( [item[0], 0, 0, 0] );	#create a list element containing team_name, 0 (incoming), 0 (outgoing), and 0 (outgoingtotal)
+		team_stats.append( [item[0], 0, 0, 0, 0] );	#create a list element containing team_name, 0 (incoming), 0 (outgoing), 0 (outgoingtotal), and 0 (incomingtotal)
 	return team_stats
 
 #sets the second and third item of each element of the team_stats list to 0
@@ -66,7 +66,7 @@ def resetTeamStats():
 	global team_stats_list
 	for item in team_stats_list:
 		item[1] = 0
-		item[2] = 0             #reset incoming & outgoing counters to zero. Do not reset Total Outgoing count
+		item[2] = 0             #reset incoming & outgoing counters to zero. Do not reset Total Outgoing and Total Incoming counts
 
 #returns the team name that is associated with the given subnet
 def getTeamBySubnet(subnet):
@@ -113,7 +113,10 @@ def incrementPacketCount(subnet, type):
 				#print (numPackets)
 				if type == 2:	#if we're adding to Outgoing
 					stats_item[3] += int(numPackets)		#add to Total Outgoing bytes
+				if type == 1:	#if we're adding to Incoming
+					stats_item[4] += int(numPackets)
 				#print(stats_item)
+				
 def initiateDBConnection():
         dbinfo = config.database
         dbwrapper = DatabaseWrapper.dbconnect(dbinfo['host'])
@@ -135,9 +138,10 @@ def pushTrafficStats(dbwrapper):
 				incoming = stats_item[1]
 				outgoing = stats_item[2]
 				total_outgoing = stats_item[3]
+				total_incoming = stats_item[4]
 				now = time.time()
 				#print("sending stats for team %s" % team_name)
-				dbwrapper.addStats(now, team_name, incoming, outgoing, total_outgoing)
+				dbwrapper.addStats(now, team_name, incoming, outgoing, total_outgoing, total_incoming)
 
 #main script loop, which reads the traffic stats log one line at a time and finds ip information and number of packets send
 #if both numPacks and trafficInfo are found, parseTrafficInfo() is called.  Timestamps are used to regulate how often traffic stats are reported
