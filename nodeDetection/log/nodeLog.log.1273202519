@@ -1,0 +1,234 @@
+IP: 10.0.1.10
+OS: Microsoft_Windows_XP
+Team: RED
+NodeType: Server
+Service: ftp UP
+Service: ssh UP
+Service: http UP
+Service: mysql UP
+
+IP: 10.0.1.11
+OS: _Linux_2.6.X|2.4.X_
+Team: RED
+NodeType: Server
+Service: ftp UP
+Service: ssh UP
+Service: http UP
+Service: mysql UP
+
+IP: 10.0.1.110
+OS: Unknown
+Team: RED
+NodeType: Client
+Service: none
+
+IP: 10.0.1.12
+OS: FreeBSD_7.X
+Team: RED
+NodeType: Server
+Service: ftp UP
+Service: ssh UP
+Service: http UP
+Service: mysql UP
+
+IP: 10.0.1.128
+OS: Unknown
+Team: RED
+NodeType: Client
+Service: none
+
+IP: 10.0.1.201
+OS: Unknown
+Team: RED
+NodeType: Client
+Service: none
+
+IP: 10.0.1.240
+OS: Unknown
+Team: RED
+NodeType: Client
+Service: none
+
+IP: 10.0.1.69
+OS: Unknown
+Team: RED
+NodeType: Client
+Service: none
+
+IP: 10.0.1.99
+OS: _Linux_2.6.X|2.4.X_
+Team: RED
+NodeType: Client
+Service: none
+
+IP: 10.0.2.10
+OS: _Microsoft_Windows_XP|2003|2000_
+Team: BLUE
+NodeType: Server
+Service: ftp UP
+Service: ssh UP
+Service: http UP
+Service: mysql UP
+
+IP: 10.0.2.11
+OS: _Linux_2.6.X|2.4.X_
+Team: BLUE
+NodeType: Server
+Service: ftp UP
+Service: ssh UP
+Service: http UP
+Service: mysql UP
+
+IP: 10.0.2.12
+OS: FreeBSD_7.X
+Team: BLUE
+NodeType: Server
+Service: ftp UP
+Service: ssh UP
+Service: http UP
+Service: mysql UP
+
+IP: 10.0.2.139
+OS: Unknown
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.145
+OS: Unknown
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.171
+OS: Unknown
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.2
+OS: Unknown
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.22
+OS: Unknown
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.50
+OS: Unknown
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.69
+OS: _Linux_2.6.X|2.4.X_
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.90
+OS: FreeBSD_7.X
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.96
+OS: Microsoft_Windows_2000|XP
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.100
+OS: Unknown
+Team: WHITE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.101
+OS: Linux_2.6.X
+Team: WHITE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.102
+OS: Microsoft_Windows_2008|Vista
+Team: WHITE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.11
+OS: DOWN
+Team: WHITE
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.12
+OS: _Linux_2.6.X|2.4.X_
+Team: WHITE
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.13
+OS: _Linux_2.6.X|2.4.X_
+Team: BLUE
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.14
+OS: DOWN
+Team: WHITE
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.15
+OS: Microsoft_Windows_2000|XP
+Team: WHITE
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.16
+OS: Microsoft_Windows_2000|XP
+Team: WHITE
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.175
+OS: Microsoft_Windows_Vista|2008
+Team: WHITE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.176
+OS: Linux_2.6.X
+Team: WHITE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.194
+OS: Unknown
+Team: WHITE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.236
+OS: Linux_2.6.X
+Team: WHITE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.250
+OS: Linux_2.6.X
+Team: WHITE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.251
+OS: Linux_2.6.X
+Team: WHITE
+NodeType: Client
+Service: none
+

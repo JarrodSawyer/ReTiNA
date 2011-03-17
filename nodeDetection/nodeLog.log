@@ -1,0 +1,29 @@
+
+IP: 192.168.0.100
+OS: Microsoft Windows Vista|2008
+Team: RED
+
+IP: 192.168.0.101
+OS: Microsoft Windows Vista|2008
+Team: RED
+Service: http DOWN
+Service: msrpc UP
+Service: netbios-ssn UP
+Service: mysql DOWN
+
+IP: 192.168.0.102
+OS: Unkown
+Team: RED
+
+IP: 192.168.0.103
+OS: Avocent embedded, NetBSD 2.X|4.X|5.X, Panasonic embedded, QNX 6.X, Sony embedded Too many fingerprints match this host to give specific OS details
+Team: RED
+
+IP: 192.168.0.11
+OS: DOWN
+Team: RED
+
+IP: 192.168.0.12
+OS: DOWN
+Team: RED
+

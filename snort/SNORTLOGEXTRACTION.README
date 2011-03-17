@@ -1,0 +1,17 @@
+Download snort and replace the rules folder with my rules folder from repository
+
+replace the threshold.conf and snort.conf with mine from repository
+
+
+Setup:  
+1) Run my perl script: perl snortlogextraction.pl
+
+2) Run snort using the command 
+
+sudo snort -b -l ~ -c /etc/snort/snort.conf
+
+3) Run bash script cyberstorm.sh
+
+4) Whatever Del needs to do to generate an xml file from the generated log file
+
+This should automate pulling the data from the logs and sending them to an xml file

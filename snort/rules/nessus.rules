@@ -1,0 +1,1 @@
+alert ip $EXTERNAL_NET any -> $HOME_NET any (msg:"Nessus Vulnerability Scan"; content:"nessus"; sid: 12345678;)

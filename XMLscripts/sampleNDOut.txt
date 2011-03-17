@@ -1,0 +1,21 @@
+IP: 10.0.2.20
+Team: Blue
+OS: Linux
+Service: SSH UP
+Service: FTP UP
+Service: MySql DOWN
+Service: HTTP DOWN
+
+IP: 10.0.1.10
+Team: Red
+OS: Windows
+Service: SSH UP
+Service: FTP UP
+Service: MySql DOWN
+Service: HTTP UP
+
+IP: 10.0.0.30
+Team: White
+OS: Unkown
+Service: none
+

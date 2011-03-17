@@ -1,0 +1,38 @@
+# Copyright 2001-2005 Sourcefire, Inc. All Rights Reserved
+#
+# This file may contain proprietary rules that were created, tested and
+# certified by Sourcefire, Inc. (the "VRT Certified Rules") as well as
+# rules that were created by Sourcefire and other third parties and
+# distributed under the GNU General Public License (the "GPL Rules").  The
+# VRT Certified Rules contained in this file are the property of
+# Sourcefire, Inc. Copyright 2005 Sourcefire, Inc. All Rights Reserved.
+# The GPL Rules created by Sourcefire, Inc. are the property of
+# Sourcefire, Inc. Copyright 2002-2005 Sourcefire, Inc. All Rights
+# Reserved.  All other GPL Rules are owned and copyrighted by their
+# respective owners (please see www.snort.org/contributors for a list of
+# owners and their respective copyrights).  In order to determine what
+# rules are VRT Certified Rules or GPL Rules, please refer to the VRT
+# Certified Rules License Agreement.
+#
+#
+# $Id: bad-traffic.rules,v 1.39.6.9 2009/09/01 16:06:15 vrtbuild Exp $
+#------------------
+# BAD TRAFFIC RULES
+#------------------
+# These signatures are representitive of traffic that should never be seen on
+# any network.  None of these signatures include datagram content checking
+# and are extremely quick signatures
+#
+
+# alert tcp $EXTERNAL_NET any <> $HOME_NET 0 (msg:"BAD-TRAFFIC tcp port 0 traffic"; flow:stateless; classtype:misc-activity; sid:524; rev:9;)
+# alert udp $EXTERNAL_NET any <> $HOME_NET 0 (msg:"BAD-TRAFFIC udp port 0 traffic"; flow:to_server; reference:bugtraq,576; reference:cve,1999-0675; reference:nessus,10074; classtype:misc-activity; sid:525; rev:11;)
+# alert ip $EXTERNAL_NET any -> $HOME_NET any (msg:"BAD-TRAFFIC ip reserved bit set"; fragbits:R; classtype:misc-activity; sid:523; rev:8;)
+# linux happens.  Blah
+# alert ip $EXTERNAL_NET any -> $HOME_NET any (msg:"BAD-TRAFFIC Unassigned/Reserved IP protocol"; ip_proto:>134; metadata:policy security-ips drop; reference:url,www.iana.org/assignments/protocol-numbers; classtype:non-standard-protocol; sid:1627; rev:5;)
+# alert ip any any -> any any (msg:"BAD-TRAFFIC IP Proto 53 SWIPE"; ip_proto:53; metadata:policy security-ips drop; reference:bugtraq,8211; reference:cve,2003-0567; reference:nessus,11791; classtype:non-standard-protocol; sid:2186; rev:6;)
+# alert ip any any -> any any (msg:"BAD-TRAFFIC IP Proto 55 IP Mobility"; ip_proto:55; metadata:policy security-ips drop; reference:bugtraq,8211; reference:cve,2003-0567; reference:nessus,11791; classtype:non-standard-protocol; sid:2187; rev:6;)
+# alert ip any any -> any any (msg:"BAD-TRAFFIC IP Proto 77 Sun ND"; ip_proto:77; metadata:policy security-ips drop; reference:bugtraq,8211; reference:cve,2003-0567; reference:nessus,11791; classtype:non-standard-protocol; sid:2188; rev:6;)
+# alert ip any any -> any any (msg:"BAD-TRAFFIC IP Proto 103 PIM"; ip_proto:103; metadata:policy security-ips drop; reference:bugtraq,8211; reference:cve,2003-0567; reference:nessus,11791; classtype:non-standard-protocol; sid:2189; rev:6;)
+# alert ip $EXTERNAL_NET any -> $HOME_NET any (msg:"BAD-TRAFFIC Linux SCTP malformed forward-tsn chunk arbitrary code execution attempt"; ip_proto:132; content:"|C0 00|"; depth:2; offset:12; byte_test:2,>,500,0,relative,big; metadata:policy security-ips drop; reference:bugtraq,33113; reference:cve,2009-0065; classtype:attempted-admin; sid:15490; rev:1;)
+# alert ip $EXTERNAL_NET any -> $HOME_NET any (msg:"BAD-TRAFFIC Linux Kernel DCCP Protocol Handler dccp_setsockopt_change integer overflow attempt"; ip_proto:33; content:" "; depth:1; offset:29; byte_test:1,<,4,0,relative; metadata:policy security-ips drop; reference:bugtraq,30704; reference:cve,2008-3276; classtype:denial-of-service; sid:15906; rev:1;)
+# alert ip $EXTERNAL_NET any -> $HOME_NET any (msg:"BAD-TRAFFIC Linux Kernel DCCP Protocol Handler dccp_setsockopt_change integer overflow attempt"; ip_proto:33; content:"|22|"; depth:1; offset:29; byte_test:1,<,4,0,relative; metadata:policy security-ips drop; reference:bugtraq,30704; reference:cve,2008-3276; classtype:denial-of-service; sid:15907; rev:1;)

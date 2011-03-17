@@ -1,0 +1,41 @@
+############################################################
+README file for Node detection module of Real Time Network Analysis system
+Author: Michael King
+Date: 1 May 2010
+############################################################
+
+Overview:
+
+The Node Detection module is designed to provide
+a real-time situational awareness of active nodes
+on a network, as well as providing OS information
+and limited port activity information.
+
+The system is intended to be used as a part of the
+Cyberstorm System but can be used as a stand-alone
+application.
+
+Note:  This system makes use of Nmap for its network
+detection.  It is important that the node detection
+software is run on a network owned by the user or
+that the user has permission to run on.  Failure to
+secure permission could result in disciplinary action
+by the user's ISP or the network administrator of any
+any scanned networks.  By using this system, the user
+agrees to take full responsibility for the actions of
+the node detection software.
+
+Installation:
+
+The system requires little in the way of installation.
+Simply make sure that you are using a Unix based OS that
+has the Nmap and bash packages installed.
+
+Running:
+
+The program has no flags and uses the nodes.conf file for
+all readily modifiable values.  These variables allow the
+user to modify team names, IP addresses, ports to scan,
+and node types for each team.  Detailed instructions for
+modifying nodes.conf can be found in the config file.
+

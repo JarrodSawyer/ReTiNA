@@ -1,0 +1,153 @@
+IP: 10.0.1.10
+OS: DOWN
+Team: RED
+NodeType: Server
+Service: none
+
+IP: 10.0.1.11
+OS: DOWN
+Team: RED
+NodeType: Server
+Service: none
+
+IP: 10.0.1.12
+OS: DOWN
+Team: RED
+NodeType: Server
+Service: none
+
+IP: 10.0.2.10
+OS: _Microsoft_Windows_XP|2003|2000_
+Team: BLUE
+NodeType: Server
+Service: ftp UP
+Service: ssh UP
+Service: http UP
+Service: mysql UP
+
+IP: 10.0.2.100
+OS: Unknown
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.11
+OS: _Linux_2.6.X|2.4.X_
+Team: BLUE
+NodeType: Server
+Service: ftp UP
+Service: ssh UP
+Service: http UP
+Service: mysql UP
+
+IP: 10.0.2.12
+OS: FreeBSD_7.X
+Team: BLUE
+NodeType: Server
+Service: ftp UP
+Service: ssh UP
+Service: http UP
+Service: mysql UP
+
+IP: 10.0.2.129
+OS: Unknown
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.15
+OS: _Linux_2.6.X|2.4.X_
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.171
+OS: Unknown
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.22
+OS: Unknown
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.25
+OS: Unknown
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.33
+OS: Linux_2.6.X
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.50
+OS: Unknown
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.69
+OS: _Linux_2.6.X|2.4.X_
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.2.70
+OS: Unknown
+Team: BLUE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.11
+OS: _Linux_2.6.X|2.4.X_
+Team: WHITE
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.12
+OS: _Linux_2.6.X|2.4.X_
+Team: WHITE
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.13
+OS: _Linux_2.6.X|2.4.X_
+Team: WHITE
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.14
+OS: _Linux_2.6.X|2.4.X_
+Team: WHITE
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.15
+OS: Microsoft_Windows_2000|XP
+Team: WHITE
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.16
+OS: Microsoft_Windows_2000|XP
+Team: WHITE
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.250
+OS: Linux_2.6.X
+Team: WHITE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.251
+OS: Linux_2.6.X
+Team: WHITE
+NodeType: Client
+Service: none
+

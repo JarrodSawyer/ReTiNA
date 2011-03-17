@@ -1,0 +1,23 @@
+IP: 192.168.1.100
+OS: Microsoft Windows XP
+Team: RED
+NodeType: Client
+
+IP: 192.168.1.102
+OS: DOWN
+Team: RED
+NodeType: Server
+
+IP: 192.168.1.103
+OS: Unkown
+Team: RED
+NodeType: Server
+Service: http DOWN
+Service: msrpc DOWN
+Service: netbios-ssn DOWN
+Service: mysql DOWN
+
+IP: 10.0.0.30
+OS: Unkown
+Team: WHITE
+NodeType: KoTH

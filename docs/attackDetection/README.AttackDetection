@@ -1,0 +1,39 @@
+##############################################################
+README file for Attack detection module of Real Time Network Analysis system
+Author: Ryan Lockwood
+Date: 1 May 2010
+##############################################################
+
+Overview:
+
+The Attack Detection module is designed to provide
+a real-time situational awareness of attacks across
+a network.  It uses a database to store all instances
+of attacks across the network.
+
+The system is intended to be used as a part of the
+Cyberstorm System.  Certain configurations of snort
+make this system impractical for use outside of a
+closed network such as during the Cyberstorm Competition.
+
+Note:  Use of this system outside of Cyberstorm or any
+similar competition will generate a large number of
+false positives.  The author is not responsible for the
+generation of false positives outside of the Cyberstorm
+system.
+
+Installation:
+
+1) 	Install snort and all of its dependencies.
+2) 	Copy the given rules folder, as well as snort.conf and threshold.conf files to the 
+	correct snort directories(Debian installations use /etc/snort).
+3)	Ensure the DatabaseWrapper.py, AttackDB.py and AttackReport.cgi
+	are in the same folder as cyberstormsince.sh. (this should be by
+	default)
+
+Running:
+
+Running cyberstormsince.sh will run the module as a standalone program
+outside of the ReTiNA system.  This program has no flags or configuration
+files outside of snort configuration.
+

@@ -1,0 +1,49 @@
+sourceip = 10.0.2.15
+destip = 192.168.0.1
+teamname = red
+attacktype = unknown
+
+sourceip = 192.168.0.1
+destip = 10.0.2.15
+teamname = red
+attacktype = unknown
+
+sourceip = 10.0.2.15
+destip = 192.168.0.1
+teamname = red
+attacktype = unknown
+
+sourceip = 192.168.0.1
+destip = 10.0.2.15
+teamname = red
+attacktype = unknown
+
+sourceip = 10.0.2.15
+destip = 192.168.0.1
+teamname = red
+attacktype = unknown
+
+sourceip = 192.168.0.1
+destip = 10.0.2.15
+teamname = red
+attacktype = unknown
+
+sourceip = 10.0.2.15
+destip = 192.168.0.1
+teamname = red
+attacktype = unknown
+
+sourceip = 192.168.0.1
+destip = 10.0.2.15
+teamname = red
+attacktype = unknown
+
+sourceip = 10.0.2.15
+destip = 192.168.0.1
+teamname = red
+attacktype = unknown
+
+sourceip = 192.168.0.1
+destip = 10.0.2.15
+teamname = red
+attacktype = unknown

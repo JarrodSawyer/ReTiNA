@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<IPList>
+	<IP Address="10.0.2.20" OS="Linux" Team="Blue">
+		<ServiceList>
+			<Service status="SSH UP" type="SSH UP"/>
+			<Service status="FTP UP" type="FTP UP"/>
+			<Service status="MySql DOWN" type="MySql DOWN"/>
+			<Service status="HTTP DOWN" type="HTTP DOWN"/>
+		</ServiceList>
+	</IP>
+	<IP Address="10.0.1.10" OS="Windows" Team="Red">
+		<ServiceList>
+		<Service status="SSH UP" type="SSH UP"/>
+		<Service status="FTP UP" type="FTP UP"/>
+		<Service status="MySql DOWN" type="MySql DOWN"/>
+		<Service status="HTTP UP" type="HTTP UP"/>
+	</ServiceList>
+	</IP>
+	<IP Address="10.0.0.30" OS="Unknown" Team="White">
+		<ServiceList/>
+	</IP>
+</IPList>

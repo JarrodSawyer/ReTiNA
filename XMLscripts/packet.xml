@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <attackList timestamp="">
+    <stat BluetoRed="" BluetoWhite="" RedtoBlue="" RedtoWhite="" White=""/>
+    <attack DestinationIP="192.168.0.1" Time="0" Type="unknown" src="10.0.2.15" srcteam="red"/>
+    <attack DestinationIP="10.0.2.15" Time="0" Type="unknown" src="192.168.0.1" srcteam="red"/>
+    <attack DestinationIP="192.168.0.1" Time="0" Type="unknown" src="10.0.2.15" srcteam="red"/>
+    <attack DestinationIP="10.0.2.15" Time="0" Type="unknown" src="192.168.0.1" srcteam="red"/>
+    <attack DestinationIP="192.168.0.1" Time="0" Type="unknown" src="10.0.2.15" srcteam="red"/>
+    <attack DestinationIP="10.0.2.15" Time="0" Type="unknown" src="192.168.0.1" srcteam="red"/>
+    <attack DestinationIP="192.168.0.1" Time="0" Type="unknown" src="10.0.2.15" srcteam="red"/>
+    <attack DestinationIP="10.0.2.15" Time="0" Type="unknown" src="192.168.0.1" srcteam="red"/>
+    <attack DestinationIP="192.168.0.1" Time="0" Type="unknown" src="10.0.2.15" srcteam="red"/>
+    <attack DestinationIP="10.0.2.15" Time="0" Type="unknown" src="192.168.0.1" srcteam="red"/>
+    <attack DestinationIP="10.0.2.15" Time="0" Type="unknown" src="192.168.0.1" srcteam="red"/>
+    <attack DestinationIP="10.0.2.15" Time="0" Type="unknown" src="192.168.0.1" srcteam="red"/>
+    </attackList>
+    
+    

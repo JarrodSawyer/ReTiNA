@@ -1,0 +1,96 @@
+IP: 10.0.1.10
+OS: DOWN
+Team: RED
+NodeType: Server
+Service: none
+
+IP: 10.0.1.11
+OS: _Linux_2.6.X|2.4.X_
+Team: RED
+NodeType: Server
+Service: ftp UP
+Service: ssh UP
+Service: http UP
+Service: mysql UP
+
+IP: 10.0.1.12
+OS: DOWN
+Team: RED
+NodeType: Server
+Service: none
+
+IP: 10.0.1.15
+OS: DOWN
+Team: RED
+NodeType: Server
+Service: none
+
+IP: 10.0.2.10
+OS: _Linux_2.6.X|2.4.X_
+Team: BLUE
+NodeType: Server
+Service: ftp UP
+Service: ssh UP
+Service: http UP
+Service: mysql UP
+
+IP: 10.0.2.11
+OS: DOWN
+Team: BLUE
+NodeType: Server
+Service: none
+
+IP: 10.0.2.12
+OS: DOWN
+Team: BLUE
+NodeType: Server
+Service: none
+
+IP: 10.0.2.15
+OS: DOWN
+Team: BLUE
+NodeType: Server
+Service: none
+
+IP: 10.0.0.11
+OS: _Linux_2.6.X|2.4.X_
+Team: Chuck Norris
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.12
+OS: _Linux_2.6.X|2.4.X_
+Team: White
+NodeType: KoTH
+Service: none
+
+IP: 10.0.0.13
+OS: _Linux_2.6.X|2.4.X_
+Team: WHITE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.14
+OS: _Linux_2.6.X|2.4.X_
+Team: WHITE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.21
+OS: Microsoft_Windows_2000|XP
+Team: WHITE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.22
+OS: Microsoft_Windows_2000|XP
+Team: WHITE
+NodeType: Client
+Service: none
+
+IP: 10.0.0.254
+OS: Linux_2.6.X
+Team: WHITE
+NodeType: Client
+Service: none
+
