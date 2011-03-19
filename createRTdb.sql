@@ -6,19 +6,17 @@ CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET latin1 COLLATE latin1_s
 USE `mydb`;
 
 -- -----------------------------------------------------
--- Table `mydb`.`stats`
+-- Table `mydb`.`traffic_stats`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`stats` ;
+DROP TABLE IF EXISTS `mydb`.`traffic_stats` ;
 
-CREATE TABLE IF NOT EXISTS `stats` (
-  `idstats` int(11) NOT NULL auto_increment,
-  `RtB` varchar(45) default NULL,
-  `BtR` varchar(45) default NULL,
-  `White` varchar(45) default NULL,
-  `BtW` varchar(45) default NULL,
-  `RtW` varchar(45) default NULL,
-  `assoc_timestamp` int(11) default '0',
-  PRIMARY KEY  (`idstats`)
+CREATE TABLE IF NOT EXISTS `traffic_stats` (
+  `id` int(11) NOT NULL auto_increment,
+  `traffic_timestamp` int(11) default '0',
+  `team_name` varchar(45) default NULL,
+  `incoming` bigint(11) default '0',
+  `outgoing` bigint(11) default '0',
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
