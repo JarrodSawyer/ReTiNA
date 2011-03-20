@@ -125,7 +125,7 @@ class dbconnect:
 		try:
 			#Get cursor for query execution
 			cursor = self.conn.cursor()
-			query = "SELECT * FROM stats WHERE assoc_timestamp > '" + timestamp + "' ORDER BY idstats DESC;"
+			query = "SELECT * FROM traffic_stats WHERE traffic_timestamp > '" + timestamp + "' ORDER BY traffic_timestamp DESC;"
 
 			#Insert into attacks table with given information.
 			success = cursor.execute (query)
