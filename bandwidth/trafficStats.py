@@ -12,8 +12,8 @@
 import sys
 import time
 import re
-#import DatabaseWrapper
-#import config
+import DatabaseWrapper
+import config
 
 #check for correct number of arguments
 if len(sys.argv) != 3:
@@ -38,6 +38,11 @@ except IOError:
 	print('Could not open file: %s' % sys.argv[2])
 	exit();
 
+#connect to database
+dbinfo = config.database
+dbwrapper = DatabaseWrapper.dbconnect(dbinfo['host'])
+print dbwrapper
+dbwrapper.login(dbinfo['user'], dbinfo['password'],dbinfo['db'])
 
 #creates a list by parsing a config file, each item of which is a tuple containing team_name and subnet.
 #so it will look something like this: [ (white, 10.0.0) , (red, 10.0.1) , (blue, 10.0.2) ]
@@ -72,8 +77,8 @@ def resetTeamStats():
 	
 	global team_stats_list
 	for item in team_stats_list:
-		item[1:2] = 0;		#reset incoming & outgoing counters to zero
-
+		item[1] = 0;		#reset incoming & outgoing counters to zero
+		item[2] = 0;
 #returns the team name that is associated with the given subnet
 def getTeamBySubnet(subnet):
 	
@@ -125,14 +130,15 @@ def pushTrafficStats():
 	global team_stats_list
 	print("pushing stats")
 	for team_item in team_info_list:
-		team_name = team_item[0]
+		teamName = team_item[0]
 		for stats_item in team_stats_list:
-			if stats_item[0] == team_name:
+			if stats_item[0] == teamName:
 				incoming = stats_item[1]
 				outgoing = stats_item[2]
 				now = time.time()
-				print("sending stats for team %s" % team_name)
-				addStats(now, team_name, incoming, outcoming)
+				print("sending stats for team %s" % teamName)
+				dbwrapper.addStats(int(now), teamName, incoming, outgoing)
+				
 
 #main script loop, which reads the traffic stats log one line at a time and finds ip information and number of packets send
 #if both numPacks and trafficInfo are found, parseTrafficInfo() is called.  Timestamps are used to regulate how often traffic stats are reported
@@ -161,7 +167,7 @@ def parseTrafficStats(log_file):
 					parseTrafficInfo(trafficInfo.group())	#parse out ip info and add numPackets to packet counts
 				now = time.time()
 				#print("now is %d" % now)
-				print(now - start)
+#				print(now - start)
 				if int(now - start) >= loopTime:	#if the set time interval has passed, push the current traffic stat data and reset packet counters
 					pushTrafficStats()
 					resetTeamStats()
@@ -170,7 +176,7 @@ def parseTrafficStats(log_file):
 			numPackets = 0	#reset numPackets to 0 if it was not found, just to be safe
 
 numPackets = 0	#number of packets sent/received.  This is set in parseTrafficStats() and used in incrementPacketCount()
-loopTime = 5	#how often we want to report new traffic stats, in seconds
+loopTime = 1	#how often we want to report new traffic stats, in seconds
 
 team_info_list = createTeamInfoList(config_file)		#first parse the config and get the team info (name & subnet)
 team_stats_list = createTeamStatsList(team_info_list)	#use the team info to create the stats_list (incoming and outgoing)
