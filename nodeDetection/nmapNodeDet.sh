@@ -51,9 +51,9 @@ fi
     done
     
     #Get all IPs on subnet
-    iplist=`nmap -n -sP "$sub.2-254" | grep Host | cut -d' ' -f2`
-    fullList=( "${scanPrefs[@]}" "${noScanPrefs[@]}" "${iplist[@]}" )
-    
+    iplist=`nmap -n -sP "$sub.2-254" | grep "Nmap scan report" | cut -d' ' -f5`    
+    fullList=( "${scanPrefs[@]}" "${noScanPrefs[@]}" "${iplist[@]}" )     
+
     #Combine config IPs with nmap scan IPs and remove duplicates
     fullList=( `echo "${fullList[@]}" | tr " " "\n" | sort -u` )
 
