@@ -18,6 +18,14 @@ if [ -a "$logfile" ]; then
 fi
 source $config
 
+team_string=""
+for tname in ${TEAMS[@]}
+do
+    team_string=$team_string$tname"|"
+done
+
+team_string=`echo $team_string | sed '$s/.$//'`
+
 scanPorts=`echo ${PORTS[@]} | tr ' ' ','`
 for tname in ${TEAMS[@]}
 do
@@ -51,6 +59,7 @@ fi
     done
     
     #Get all IPs on subnet
+    echo $sub
     iplist=`nmap -n -sP "$sub.2-254" | grep "Nmap scan report" | cut -d' ' -f5`    
     fullList=( "${scanPrefs[@]}" "${noScanPrefs[@]}" "${iplist[@]}" )     
 
@@ -267,15 +276,16 @@ echo "Not cached $ip"
 	echo "IP: ${node[0]}" >> $logfile
 	echo "OS: ${node[1]}" >> $logfile
 	if [[ "${node[3]}" == "KoTH" ]]; then
-	    tm=`curl -D - -v ftp://${node[0]}:21 2> /dev/null | grep '^220' | tee asdf | perl -nE '/(white|chuck.?norris|bruce.?lee)/i && print "$1\n"'`
-	    if [ "$tm" == "Chuck Norris" ]; then
-		    echo "Team: RED" >> $logfile
-	    else if [ "$tm" == "Bruce Lee" ]; then
-		    echo "Team: BLUE" >> $logfile
-	    	else
+	    tm=`curl -D - -v ftp://${node[0]}:21 2> /dev/null | grep '^220' | tee asdf | egrep -w -i -o $team_string`
+	    tm=`echo $tm | tr [A-Z] [a-z]`
+	    for tname in ${TEAMS[@]}
+	    do
+		if [ "$tm" != "white" ]; then
+		    echo "Team: ${node[2]}" >> $logfile
+		else
 		    echo "Team: ${node[2]}" >> $logfile
 		fi
-	    fi
+	    done
 	else
 	    echo "Team: ${node[2]}" >> $logfile
 	fi
