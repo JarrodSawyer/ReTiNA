@@ -1,4 +1,9 @@
 #!/usr/bin/env python2.6
+#This file is used to update the Statitistics by querying the Database
+#and getting each line in the database with the next sequencial
+#time stamp. It then prints the stats in a xml format in which 
+#the caller of the file will parse.
+
 
 import sys
 import DatabaseWrapper, config
@@ -19,16 +24,24 @@ dbinfo = config.database
 dbwrapper = DatabaseWrapper.dbconnect(dbinfo['host'])
 dbwrapper.login(dbinfo['user'], dbinfo['password'],dbinfo['db'])
 
+#gets the traffic stats from the database
 stats = dbwrapper.getStats(timestamp)
 
+#get the latest time stamp in the table
 latest_timestamp = stats[0][1]
 
+#The beggining of the XML to send off
 print "<Statistics timestamp="+str(latest_timestamp)+">"
 
+#Start up a counter for the while loop below
 count = 0
+
+#Get the size of the stats table
 statsSize = len(stats) 
+
 teamList = [""]
 
+#Loop through the list of stats and build XML to send off
 while (count < statsSize):
       	try:
 		teamList.index(str(stats[count][2])) # Checks to see whether stats for the team have already been printed. 
@@ -42,4 +55,4 @@ while (count < statsSize):
 	print "<outgoing packets=" + str(stats[count][4]) + "/>"
 	print "</team>"
 
-print "/Statistics"
+print "</Statistics>"
