@@ -9,6 +9,7 @@
 # 
 
 import sys
+sys.path.append("../database")
 import DatabaseWrapper, config
 
 #connect to database

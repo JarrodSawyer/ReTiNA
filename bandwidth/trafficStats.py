@@ -1,3 +1,5 @@
+#!/usr/bin/env python2.6
+
 #Usage: python trafficStats.py teams.cfg logfile.txt
 #
 #trafficStats takes in two arguments, a teams config file and a IPTraf log file
@@ -7,13 +9,13 @@
 #We increment the corresponding packet counters accordingly
 #Periodically we write traffic stats data to the database using a wrapper and reset our packet counters
 
-#!/usr/bin/python
 
 import sys
 import time
 import re
-#import DatabaseWrapper
-#import config
+sys.path.append("../database")
+import DatabaseWrapper
+import config
 
 #check for correct number of arguments
 if len(sys.argv) != 3:

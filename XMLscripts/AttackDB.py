@@ -8,6 +8,7 @@
 #
 
 import sys
+sys.path.append("../database")
 import DatabaseWrapper, config
 import time
 
