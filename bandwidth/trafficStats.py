@@ -12,8 +12,8 @@
 import sys
 import time
 import re
-import DatabaseWrapper
-import config
+#import DatabaseWrapper
+#import config
 
 #check for correct number of arguments
 if len(sys.argv) != 3:
@@ -38,11 +38,6 @@ except IOError:
 	print('Could not open file: %s' % sys.argv[2])
 	exit();
 
-#connect to database
-dbinfo = config.database
-dbwrapper = DatabaseWrapper.dbconnect(dbinfo['host'])
-#print dbwrapper
-dbwrapper.login(dbinfo['user'], dbinfo['password'],dbinfo['db'])
 
 #creates a list by parsing a config file, each item of which is a tuple containing team_name and subnet.
 #so it will look something like this: [ (white, 10.0.0) , (red, 10.0.1) , (blue, 10.0.2) ]
@@ -77,8 +72,8 @@ def resetTeamStats():
 	
 	global team_stats_list
 	for item in team_stats_list:
-		item[1] = 0;		#reset incoming & outgoing counters to zero
-		item[2] = 0;
+		item[1:2] = 0;		#reset incoming & outgoing counters to zero
+
 #returns the team name that is associated with the given subnet
 def getTeamBySubnet(subnet):
 	
@@ -89,13 +84,13 @@ def getTeamBySubnet(subnet):
 	return -1
 
 #parses out the relevant data from each line of the traffic stats log.
-#the input string should look something like this: "10.0.2.10:1108 to 10.0.2.1:38181"
+#the input string should look something like this: "10.0.2.10:1108 > 10.0.2.1:38181"
 def parseTrafficInfo(ip_to_ip):
 	
 	if ip_to_ip != "":
 		space_index = ip_to_ip.find(" ")			#find the first space
 		sender = ip_to_ip[ :space_index ]			#substring out sender ip: "10.0.2.10:1108"
-		receiver = ip_to_ip[ (space_index+4): ]		#substring out receiver ip: "10.0.2.1:38181"
+		receiver = ip_to_ip[ (space_index+3): ]		#substring out receiver ip: "10.0.2.1:38181"
 		
 		sender_subnet = sender[ :sender.rfind(".") ]		#substring relevant subnet info: "10.0.2"
 		receiver_subnet = sender[ :receiver.rfind(".") ]
@@ -128,17 +123,16 @@ def pushTrafficStats():
 	
 	global team_info_list
 	global team_stats_list
-	#print("pushing stats")
+	print("pushing stats")
 	for team_item in team_info_list:
-		teamName = team_item[0]
+		team_name = team_item[0]
 		for stats_item in team_stats_list:
-			if stats_item[0] == teamName:
+			if stats_item[0] == team_name:
 				incoming = stats_item[1]
 				outgoing = stats_item[2]
 				now = time.time()
-				print("sending stats for team %s" % teamName)
-				dbwrapper.addStats(int(now), teamName, incoming, outgoing)
-				
+				print("sending stats for team %s" % team_name)
+				addStats(now, team_name, incoming, outcoming)
 
 #main script loop, which reads the traffic stats log one line at a time and finds ip information and number of packets send
 #if both numPacks and trafficInfo are found, parseTrafficInfo() is called.  Timestamps are used to regulate how often traffic stats are reported
@@ -149,30 +143,34 @@ def parseTrafficStats(log_file):
 	start = time.time()	#get a starting time
 	while 1:
 		line = log_file.readline()
-		if line != "":
-			packetInfo = re.search( '(\d*) bytes', line)	#parse the number of packets send
-			#print(packetInfo)
-			if packetInfo:
-				packetInfo_string = str(packetInfo.group())
-				space_index = packetInfo_string.find(" ")
-				numPackets = packetInfo_string[ :space_index ]
-				if int(numPackets) > 0:	#only continue if there were actually send packets
-					trafficInfo = re.search( '(\d*)[.]{1}(\d*)[.]{1}(\d*)[.]{1}(\d*)[:]*(\d*) to (\d*)[.]{1}(\d*)[.]{1}(\d*)[.]{1}(\d*)', line)	#get ip info: "10.0.2.10:1108 to 10.0.2.1:38181"
-					if trafficInfo:
-						#print(trafficInfo.group())
-						parseTrafficInfo(trafficInfo.group())	#parse out ip info and add numPackets to packet counts
-					now = time.time()
-					#print("now is %d" % now)
-	#				print(now - start)
-					if int(now - start) >= loopTime:	#if the set time interval has passed, push the current traffic stat data and reset packet counters
-						pushTrafficStats()
-						resetTeamStats()
-						start = time.time()
-			else:
-				numPackets = 0	#reset numPackets to 0 if it was not found, just to be safe
+		if not line:
+			print("Reached end of log file")
+			break;
+		pass
+		
+		packetInfo = re.search( 'length (\d*)', line)	#parse the number of packets send
+		#print(packetInfo)
+		if packetInfo:
+			packetInfo_string = str(packetInfo.group())
+			space_index = packetInfo_string.find(" ")
+			numPackets = packetInfo_string[ :space_index ]
+			if int(numPackets) > 0:	#only continue if there were actually send packets
+				trafficInfo = re.search( '(\d*)[.]{1}(\d*)[.]{1}(\d*)[.]{1}(\d*)[:]*(\d*) > (\d*)[.]{1}(\d*)[.]{1}(\d*)[.]{1}(\d*)', line)	#get ip info: "10.0.2.10:1108 to 10.0.2.1:38181"
+				if trafficInfo:
+					#print(trafficInfo.group())
+					parseTrafficInfo(trafficInfo.group())	#parse out ip info and add numPackets to packet counts
+				now = time.time()
+				#print("now is %d" % now)
+				print(now - start)
+				if int(now - start) >= loopTime:	#if the set time interval has passed, push the current traffic stat data and reset packet counters
+					pushTrafficStats()
+					resetTeamStats()
+					start = time.time()
+		else:
+			numPackets = 0	#reset numPackets to 0 if it was not found, just to be safe
 
 numPackets = 0	#number of packets sent/received.  This is set in parseTrafficStats() and used in incrementPacketCount()
-loopTime = 1	#how often we want to report new traffic stats, in seconds
+loopTime = 5	#how often we want to report new traffic stats, in seconds
 
 team_info_list = createTeamInfoList(config_file)		#first parse the config and get the team info (name & subnet)
 team_stats_list = createTeamStatsList(team_info_list)	#use the team info to create the stats_list (incoming and outgoing)
