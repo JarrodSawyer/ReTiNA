@@ -1,8 +1,8 @@
 #!/bin/bash
 
-killall -s USR2 iptraf
-iptraf -i all -f -B -L ./testlogfile.txt
-#sudo chmod a+rw logfile.txt
+killall -s USR2 tcpdump # Kill all curently running tcpdump calls
+
+tcpdump -i any -nn > ./testlogfile.txt & 
 
 python trafficStats.py teams.cfg testlogfile.txt 
 

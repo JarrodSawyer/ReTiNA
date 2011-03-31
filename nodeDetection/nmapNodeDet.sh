@@ -21,10 +21,11 @@ source $config
 team_string=""
 for tname in ${TEAMS[@]}
 do
-    team_string=$team_string$tname"|"
+    team_string=$team_string${TEAM_MAP[$tname]}"|"
 done
 
 team_string=`echo $team_string | sed '$s/.$//'`
+echo $team_string
 
 scanPorts=`echo ${PORTS[@]} | tr ' ' ','`
 for tname in ${TEAMS[@]}
@@ -276,16 +277,26 @@ echo "Not cached $ip"
 	echo "IP: ${node[0]}" >> $logfile
 	echo "OS: ${node[1]}" >> $logfile
 	if [[ "${node[3]}" == "KoTH" ]]; then
-	    tm=`curl -D - -v ftp://${node[0]}:21 2> /dev/null | grep '^220' | tee asdf | egrep -w -i -o $team_string`
+	    tm=`curl -D - -v ftp://${node[0]}:21 2> /dev/null | grep '^220' | tee asdf | egrep -w -i -o "$team_string"`
 	    tm=`echo $tm | tr [A-Z] [a-z]`
-	    for tname in ${TEAMS[@]}
-	    do
-		if [ "$tm" != "white" ]; then
-		    echo "Team: ${node[2]}" >> $logfile
-		else
-		    echo "Team: ${node[2]}" >> $logfile
-		fi
-	    done
+      
+	    if [ "$tm" == "white" ]; then
+		echo "Team: ${node[2]}" >> $logfile
+	    else
+		for tname in ${TEAMS[@]}
+		do
+		    teamName=${TEAM_MAP[$tname]}
+		    teamName=`echo $teamName | tr [A-Z] [a-z]`
+
+		    if [ "$tm" == "$teamName" ]
+		    then
+			echo "Team: ${tname}" >> $logfile
+			break
+		    fi
+		    
+		done
+	    fi
+	    
 	else
 	    echo "Team: ${node[2]}" >> $logfile
 	fi

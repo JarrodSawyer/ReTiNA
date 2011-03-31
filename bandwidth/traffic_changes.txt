@@ -1,0 +1,39 @@
+Traffic Statistics:
+
+1. Changed the stats table of the ReTiNA database to traffic_stats. Also changed the fields of the table
+   to id, traffic_timestamp, team_name, incoming, and outgoing. Also changed the createRTdb.sql script
+   so that it creates the database with these changes.
+
+2. Changed the DatabaseWrapper.py addStats method. The method was changed to account for the changes made
+   to the underlying database.
+
+3. Removed the need for perl. Made it to where the logfile is parsed and the data is added to the database
+   all in one python script. 
+
+4. Changed from using IPTraf to TCPDump.
+
+5. Changed the output of the cgi script to:
+   
+   <Statistics timestamp="123456789">
+   <team name="white">
+   <incoming packets="1234" />
+   <outgoing packets="4321" />
+   </team>
+   <team name="red">
+   <incoming packets="1234" />
+   <outgoing packets="4321" />
+   </team>
+   <team name="blue">
+   <incoming packets="1234" />
+   <outgoing packets="4321" />
+   </team>
+   </Statistics> 
+
+6. Changed the DatabaseWrapper.py getStats method in the cgi-bin folder to account for the new database table 
+   format. 
+
+7. Wrote script to start the whole thing, StartTrafficStats.sh
+
+8. Removed doit, StatsDB.py, first.pl
+
+9. Added a config file for the teams, teams.cfg.
