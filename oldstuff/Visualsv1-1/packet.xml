@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <attackList timestamp="LogTime = 11.082630">
+    <stat BluetoRed="120" BluetoWhite="20" RedtoBlue="100" RedtoWhite="90" White="900"/>
+    <attack DestinationIP="74.125.162.18" Time="11.082638" Type="unknown" src="10.0.2.15" srcteam="red"/>
+    </attackList>
