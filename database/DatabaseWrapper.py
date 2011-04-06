@@ -93,7 +93,7 @@ class dbconnect:
 		try:
 			#Get cursor for query execution
 			cursor = self.conn.cursor ()
-			query = "INSERT INTO attacks (source,source_team,destination,destTeam,type,time,timetodie,assoc_timestamp) VALUES (\"" + src + "\",\"" + srcteam + "\",\"" + dest + "\",\"" + destTeam + "\",\"" + atype + "\",\"" + time + "\",\"" + timetodie + "\"," + str(timestamp) + ");" 
+			query = "INSERT INTO attacks (source,source_team,destination,destTeam,type,time,timetodie,assoc_timestamp) VALUES (\"" + str(src) + "\",\"" + str(srcteam) + "\",\"" + str(dest) + "\",\"" + str(destTeam) + "\",\"" + str(atype) + "\",\"" + str(time) + "\",\"" + str(timetodie) + "\"," + str(timestamp) + ");" 
 
 			#Insert into attacks table with given information.
 			print query
