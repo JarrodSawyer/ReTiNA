@@ -18,14 +18,35 @@ if [ -a "$logfile" ]; then
 fi
 source $config
 
-team_string=""
-for tname in ${TEAMS[@]}
-do
-    team_string=$team_string${TEAM_MAP[$tname]}"|"
+#Get KOTH boxes from XSCORE
+
+kothBoxes="10.0.0.15 White:10.0.0.3 Red:10.0.0.100 Blue:10.0.0.78 White" # Need to call XSCORE CGI script here
+
+# Splits the string from XScore at the colons
+ipOwner=($(echo $kothBoxes | sed -e 's/'":"'/\n/g' | while read line; do echo $line | sed 's/[\t ]/'":"'/g'; done))
+
+#Replaces the colends with spaces
+for (( i = 0; i < ${#ipOwner[@]}; i++ )); do
+  ipOwner[i]=$(echo ${ipOwner[i]} | sed 's/'":"'/ /')
 done
 
-team_string=`echo $team_string | sed '$s/.$//'`
-echo $team_string
+declare -A ipOwnerMap # Holds the ip of the KOTH box and its correponding owner
+
+i=0
+
+#Goes through all of the ip/owner pairs and builds a list of the ips and the map of the two
+while [  $i -lt ${#ipOwner[@]} ]
+do
+    owner=`echo ${ipOwner[$i]} | cut -d' ' -f2` # Owner                                                                                                                               
+    ip=`echo ${ipOwner[$i]} | cut -d' ' -f1` # IP                                                                                                                                             
+ 
+    ipOwnerMap[$ip]=$owner
+    ip=`echo ${ip} | cut -d'.' -f4`
+    ip=".$ip"
+    
+    ipList[$i]=$ip
+    let i=$i+1
+done
 
 scanPorts=`echo ${PORTS[@]} | tr ' ' ','`
 for tname in ${TEAMS[@]}
@@ -34,7 +55,14 @@ do
     #get variables holding ip information
     eval sub=\$"${team}_SUB"
     eval scanIPs=\$"{${team}_SCAN_IPS[@]}"
-    eval noScanIPs=\$"{${team}_NO_SCAN_IPS[@]}"
+
+    if [ "$team" == "WHITE" ] # The NO_SCAN_IPS list is treated as KOTH boxes for white team so add the
+    then                       # KOTH box ips gotten from XSCORE to the list if the team is white
+	eval noScanIPs=( \${${team}_NO_SCAN_IPS[@]} ${ipList[@]} )
+    else
+	eval noScanIPs=\$"{${team}_NO_SCAN_IPS[@]}"
+    fi
+
     eval ntypeArr=( \$"{${team}_NTYPES[@]}" )
 
 echo "ntypeArr: ${ntypeArr[@]}"
@@ -277,25 +305,9 @@ echo "Not cached $ip"
 	echo "IP: ${node[0]}" >> $logfile
 	echo "OS: ${node[1]}" >> $logfile
 	if [[ "${node[3]}" == "KoTH" ]]; then
-	    tm=`curl -D - -v ftp://${node[0]}:21 2> /dev/null | grep '^220' | tee asdf | egrep -w -i -o "$team_string"`
-	    tm=`echo $tm | tr [A-Z] [a-z]`
-      
-	    if [ "$tm" == "white" ]; then
-		echo "Team: ${node[2]}" >> $logfile
-	    else
-		for tname in ${TEAMS[@]}
-		do
-		    teamName=${TEAM_MAP[$tname]}
-		    teamName=`echo $teamName | tr [A-Z] [a-z]`
-
-		    if [ "$tm" == "$teamName" ]
-		    then
-			echo "Team: ${tname}" >> $logfile
-			break
-		    fi
-		    
-		done
-	    fi
+	    #tm=`curl -D - -v ftp://${node[0]}:21 2> /dev/null | grep '^220' | tee asdf | egrep -w -i -o "$team_string"`
+	    #tm=`echo $tm | tr [A-Z] [a-z]`
+	    echo "Team: ${ipOwnerMap[${node[0]}]}" >> $logfile # Get the owner of the current KOTH box
 	    
 	else
 	    echo "Team: ${node[2]}" >> $logfile
