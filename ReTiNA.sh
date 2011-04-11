@@ -12,10 +12,10 @@ if [ $# -eq 1 -a "$1" == "-d" ]; then
 fi
 cdir=`pwd`
 while [ 0 ]; do
-	cd "$cdir/bandwidth"
-	./doit $redir
-	cd "$cdir/nodeDetection"
-	./run.sh $redir
-	cd "$cdir/XMLscripts"
-	./cyberstormsince.sh $redir
+	cd "$cdir/TrafficStatistics"
+	./StartTrafficStats.sh $redir
+	cd "$cdir/NodeDetection"
+	./StartNodeDetection.sh $redir
+	cd "$cdir/AttackDetection"
+	./StartAttachDetection.sh $redir
 done
