@@ -17,5 +17,5 @@ while [ 0 ]; do
 	cd "$cdir/NodeDetection"
 	./StartNodeDetection.sh $redir
 	cd "$cdir/AttackDetection"
-	./StartAttachDetection.sh $redir
+	./StartAttackDetection.sh $redir
 done
