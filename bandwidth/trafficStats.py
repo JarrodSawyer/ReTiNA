@@ -12,8 +12,8 @@
 import sys
 import time
 import re
-import DatabaseWrapper
-import config
+#import DatabaseWrapper
+#import config
 
 #check for correct number of arguments
 if len(sys.argv) != 3:
@@ -114,7 +114,7 @@ def incrementPacketCount(subnet, type):
 	if team != "":
 		for stats_item in team_stats_list:	#find the stats for the team and add to packet count
 			if stats_item[0] == team:
-				stats_item[type] += numPackets;		#this is where we decide what to increment, Incoming or Outgoing
+				stats_item[type] += int(numPackets);		#this is where we decide what to increment, Incoming or Outgoing
 				#print(stats_item)
 
 #use the database wrapper to send traffic stats info for each team.
@@ -123,13 +123,15 @@ def pushTrafficStats():
 	
 	global team_info_list
 	global team_stats_list
+	print("pushing stats")
 	for team_item in team_info_list:
 		team_name = team_item[0]
 		for stats_item in team_stats_list:
-			if stats_item[0] == team:
+			if stats_item[0] == team_name:
 				incoming = stats_item[1]
 				outgoing = stats_item[2]
 				now = time.time()
+				print("sending stats for team %s" % team_name)
 				addStats(now, team_name, incoming, outcoming)
 
 #main script loop, which reads the traffic stats log one line at a time and finds ip information and number of packets send
@@ -146,13 +148,20 @@ def parseTrafficStats(log_file):
 			break;
 		pass
 		
-		numPackets = re.search( '(\d*) packets/', line)	#parse the number of packets send
-		if numPackets:
+		packetInfo = re.search( '(\d*) packets', line)	#parse the number of packets send
+		#print(packetInfo)
+		if packetInfo:
+			packetInfo_string = str(packetInfo.group())
+			space_index = packetInfo_string.find(" ")
+			numPackets = packetInfo_string[ :space_index ]
 			if int(numPackets) > 0:	#only continue if there were actually send packets
 				trafficInfo = re.search( '(\d*)[.]{1}(\d*)[.]{1}(\d*)[.]{1}(\d*)[:]*(\d*) to (\d*)[.]{1}(\d*)[.]{1}(\d*)[.]{1}(\d*)', line)	#get ip info: "10.0.2.10:1108 to 10.0.2.1:38181"
 				if trafficInfo:
+					#print(trafficInfo.group())
 					parseTrafficInfo(trafficInfo.group())	#parse out ip info and add numPackets to packet counts
 				now = time.time()
+				#print("now is %d" % now)
+				print(now - start)
 				if int(now - start) >= loopTime:	#if the set time interval has passed, push the current traffic stat data and reset packet counters
 					pushTrafficStats()
 					resetTeamStats()
