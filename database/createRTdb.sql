@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `traffic_stats` (
   `team_name` varchar(45) default NULL,
   `incoming` bigint(11) default '0',
   `outgoing` bigint(11) default '0',
+  `total_traffic` bigint(11) default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 

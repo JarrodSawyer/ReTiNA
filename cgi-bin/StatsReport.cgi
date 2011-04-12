@@ -32,6 +32,7 @@ stats = dbwrapper.getStats(timestamp)
 latest_timestamp = stats[0][1]
 
 #The beggining of the XML to send off
+print "Content-Type: application/xml\n"
 print "<Statistics timestamp="+str(latest_timestamp)+">"
 
 #Start up a counter for the while loop below
@@ -52,8 +53,9 @@ while (count < statsSize):
 	else:
 		break # Stats have been printed so we are done
 	print "<team name=" + str(stats[count][2]) + ">"
-	print "<incoming packets=" + str(stats[count][3]) + "/>"
-	print "<outgoing packets=" + str(stats[count][4]) + "/>"
+	print "<incoming=" + str(stats[count][3]) + "/>"
+	print "<outgoing=" + str(stats[count][4]) + "/>"
+	print "<total traffic=" + str(stats[count][5]) + "/>"
 	print "</team>"
 
 print "</Statistics>"
