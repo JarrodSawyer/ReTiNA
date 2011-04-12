@@ -154,7 +154,7 @@ class dbconnect:
 		try:
 			#Get cursor for query execution
 			cursor = self.conn.cursor()
-			query = "SELECT * FROM attacks WHERE assoc_timestamp > '" + timestamp + "' ORDER BY idattacks DESC LIMIT 30;" 
+			query = "SELECT * FROM attacks WHERE assoc_timestamp > '" + timestamp + "' AND source_team!='white' ORDER BY idattacks DESC LIMIT 30;" 
 
 			#select 10 latest attacks
 			success = cursor.execute (query)
