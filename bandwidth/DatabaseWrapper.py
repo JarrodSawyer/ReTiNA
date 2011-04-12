@@ -64,12 +64,12 @@ class dbconnect:
 			sys.exit (1)
 
 	#Add an event to the database. Pass in team nae, type of event, number of points awarded (can be negative), time event occured (currently requires format YYYY-MM-DD HH:MM:SS but can be changed to UTC if that is preferable), and the message to be displayed
-	def addStats(self, RtB, BtR, White,BtW,RtW,timestamp):
+	def addStats(timestamp, team_name, incoming, outgoing):
 		try:
 			#Get cursor for query execution
 			cursor = self.conn.cursor ()
 
-			query = "INSERT INTO stats (RtB,BtR,White,BtW,RtW,assoc_timestamp) VALUES (\"" + RtB + "\",\"" + BtR + "\",\"" + White + "\",\"" + BtW + "\",\"" + RtW + "\"," + str(timestamp) + ");" 
+			query = "INSERT INTO stats (traffic_timestamp, team_numae, incoming, outgoing) VALUES (\"" +  str(timestamp) + "\",\"" + team_name + "\",\"" + incoming + "\",\"" + outgoing + "\");" 
 			#Insert into Stats table with given information.
 			print query
 			cursor.execute (query)
