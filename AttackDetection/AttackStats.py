@@ -312,10 +312,10 @@ def parseAttackLog(log_file):
 	dbwrapper = initiateDBConnection()
 	while 1:
 		line = log_file.readline()
-		if not line:
-			print("Reached end of log file")
-			break;
-		pass
+		#if not line:
+		#	print("Reached end of log file")
+		#	break;
+		#pass
 		attackTimeEntry = re.search('(\d+\/\d+-\d+:\d+:\d+.\d+)', line)
 		if attackTimeEntry:
 			attackTime = attackTimeEntry.group()
