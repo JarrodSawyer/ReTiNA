@@ -1,8 +1,8 @@
 #!/usr/bin/env python2.6
 
-#Usage: python startAttackStats.py teams.cfg logfile.txt
+#Usage: python AttackStats.py teams.cfg logfile.txt
 #
-#startAttackStats takes in two arguments, a teams config file and a Snort log file
+#AttackStats takes in two arguments, a teams config file and a Snort log file
 #We parse out the team info from the config, giving us a list of team names and subnets
 #We then begin parsing the log file line by line, collecting attack info such as source & destination ip's and type of attack
 #Each new attack and its info is written to the database using a wrapper
@@ -16,7 +16,7 @@ import config
 
 #check for correct number of arguments
 if len(sys.argv) != 3:
-	print("usage: python startAttackStats.py teams.cfg logfile.txt")
+	print("usage: python AttackStats.py teams.cfg logfile.txt")
 	exit();
 
 #check for valid teams config
