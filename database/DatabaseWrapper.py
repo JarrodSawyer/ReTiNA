@@ -63,7 +63,7 @@ class dbconnect:
 			print "Error %d: %s" % (e.args[0], e.args[1])
 			sys.exit (1)
 
-	#Add an event to the database. Pass in team nae, type of event, number of points awarded (can be negative), time event occured (currently requires format YYYY-MM-DD HH:MM:SS but can be changed to UTC if that is preferable), and the message to be displayed
+	#Add stats data for the specified team, including incoming bytes, outgoing bytes, and total outgoing bytes since starting trafficStats
 	def addStats(self, timestamp, teamName, incoming, outgoing, total_outgoing):
 		print timestamp
 		print teamName
