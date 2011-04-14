@@ -97,8 +97,8 @@ def parseTrafficInfo(ip_to_ip):
 		sender = ip_to_ip[ :space_index ]			#substring out sender ip: "10.0.2.10:1108"
 		receiver = ip_to_ip[ (space_index+4): ]		#substring out receiver ip: "10.0.2.1:38181"
 		
-		sender_subnet = sender[ :sender.rfind(".") ]		#substring relevant subnet info: "10.0.2"
-		receiver_subnet = sender[ :receiver.rfind(".") ]
+		sender_subnet = sender[ :sender.rfind(":") ]		#substring relevant subnet info: "10.0.2"
+		receiver_subnet = sender[ :receiver.rfind(":") ]
 		incrementPacketCount(sender_subnet, 1)		#type 1 increments Incoming packet count
 		incrementPacketCount(receiver_subnet, 2)		#type 2 increments Outgoing packet count
 		#print("sender: %s"  % sender_subnet);
@@ -154,7 +154,7 @@ def parseTrafficStats(log_file):
 			break;
 		pass
 		
-		packetInfo = re.search( '(\d*) packets', line)	#parse the number of packets send
+		packetInfo = re.search( '(\d*) bytes', line)	#parse the number of packets send
 		#print(packetInfo)
 		if packetInfo:
 			packetInfo_string = str(packetInfo.group())
