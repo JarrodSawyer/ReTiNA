@@ -4,9 +4,16 @@ $| = 1;
 use CGI qw(:standard);
 use File::Tail;
 
-  $file=File::Tail->new(name=>"/home/cyberstorm/cyberstorm/realtime-backend/XMLscripts/alert.fast", maxinterval=>0.1, adjustafter=>0.1);
-  
-  while (defined($line=$file->read)) {
+  #$file=File::Tail->new(name=>"./alert.fast", maxinterval=>0.1, adjustafter=>0.1);
+open (file, "./alert.fast");
+
+print "Before Loop";
+$j=0;
+#  while (defined($line=$file->read)) {
+while (<file>)
+{
+    $line=$_;
+      print "Enter loop";
     if($line =~ /(\d+\/\d+-\d+:\d+:\d+.\d+)/){
 	$timestamp = $&;
 	print "timestamp = $timestamp\n";
@@ -141,8 +148,34 @@ use File::Tail;
     elsif($line =~ /(X11)/){
 	print "attacktype = X11 hack attempt\n\n"
     }    
+    elsif($line =~ /(PSNG_TCP_PORTSWEEP)/){
+	print "attacktype = TCP port sweep\n\n"
+    }
+    elsif($line =~ /(P2P)/){
+	print "attacktype = P2P traffic\n\n"
+    }
+    elsif($line =~ /(WEB-CGI)/){
+	print "attacktype = CGI exploit\n\n"
+    }
+    elsif($line =~ /(WEB-IIS)/){
+	print "attacktype = Microsoft web server attack\n\n"
+    }
+    elsif($line =~ /(WEB-COLDFUSION administrator access)/){
+	print "attacktype = Coldfusion administrator access\n\n"
+    }
     else{
 	print "attacktype = unknown\n\n";
+	print "NO ATTACK FOUND: ";
+	print $line;
+	print "\n";
+	$j++;
     }
     $i++;
 }
+
+print "Total Line:";
+print $i;
+print "\n";
+print "No attack found:";
+print $j;
+print "\n";

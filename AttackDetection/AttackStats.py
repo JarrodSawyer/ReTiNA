@@ -1,8 +1,8 @@
 #!/usr/bin/env python2.6
 
-#Usage: python startAttackStats.py teams.cfg logfile.txt
+#Usage: python AttackStats.py teams.cfg logfile.txt
 #
-#startAttackStats takes in two arguments, a teams config file and a Snort log file
+#AttackStats takes in two arguments, a teams config file and a Snort log file
 #We parse out the team info from the config, giving us a list of team names and subnets
 #We then begin parsing the log file line by line, collecting attack info such as source & destination ip's and type of attack
 #Each new attack and its info is written to the database using a wrapper
@@ -16,7 +16,7 @@ import config
 
 #check for correct number of arguments
 if len(sys.argv) != 3:
-	print("usage: python startAttackStats.py teams.cfg logfile.txt")
+	print("usage: python AttackStats.py teams.cfg logfile.txt")
 	exit();
 
 #check for valid teams config
@@ -104,7 +104,7 @@ def parseAttackInfo(ip_to_ip):
 
 #use the database wrapper to send new attack info.
 #sent data includes the 
-def addNewAttackEntry(attackInfo, attackType, attackTime):
+def addNewAttackEntry(attackInfo, attackType, attackTime, dbwrapper):
 	
 	#print("pushing new attack entry to database")
 	now = time.time()
@@ -120,7 +120,13 @@ def addNewAttackEntry(attackInfo, attackType, attackTime):
 	#print("attack type: %s" % attackType)
 	#print("attack time: %s" % attackTime)
 	
-	addAttack(attacker_ip, attacker_team, receiver_ip, receiver_team, attackType, attackTime, timetodie, now)
+	dbwrapper.addAttack(attacker_ip, attacker_team, receiver_ip, receiver_team, attackType, attackTime, timetodie, now)
+
+def initiateDBConnection():
+	dbinfo = config.database
+	dbwrapper = DatabaseWrapper.dbconnect(dbinfo['host'])
+	dbwrapper.login(dbinfo['user'], dbinfo['password'],dbinfo['db'])
+	return dbwrapper
 
 #parses the given snort log line and determines attack type based on keywords.  Returns "Unknown" if no keywords are found
 def parseAttackType(line):
@@ -203,6 +209,99 @@ def parseAttackType(line):
 	attackType = re.search( 'X11', line)
 	if attackType:
 		return "X11 hack attempt"
+	attackType = re.search( 'ATTACK-RESPONSES', line)
+	if attackType:
+		return "Machine has been compromised"
+	attackType = re.search( 'BACKDOOR', line)
+	if attackType:
+		return "Backdoor attack attempt"
+	attackType = re.search( 'BOTNET-CNC', line)
+	if attackType:
+		return "Botnet dacryptic activity"
+	attackType = re.search( 'CHAT', line)
+	if attackType:
+		return "Chat program in use"
+	attackType = re.search( 'DNS', line)
+	if attackType:
+		return "DNS attack"
+	attackType = re.search( 'IMAP', line)
+	if attackType:
+		return "IMAP server attack"
+	attackType = re.search( 'MULTIMEDIA', line)
+	if attackType:
+		return "Multimedia program in use"
+	attackType = re.search( 'NETBIOS', line)
+	if attackType:
+		return "NetBIOS attack"
+	attackType = re.search( 'NNTP', line)
+	if attackType:
+		return "NNTP vulnerability exploit"
+	attackType = re.search( 'ORACLE', line)
+	if attackType:
+		return "Oracle exploit"
+	attackType = re.search( 'P2P', line)
+	if attackType:
+		return "Peer to peer traffic"
+	attackType = re.search( 'PHISHING-SPAM', line)
+	if attackType:
+		return "Spam email attack"
+	attackType = re.search( 'POP3', line)
+	if attackType:
+		return "POP3 server attack"
+	attackType = re.search( 'RSERVICES', line)
+	if attackType:
+		return "Remote login, shell, or exec exploit"
+	attackType = re.search( 'SCADA', line)
+	if attackType:
+		return "SCADA exploit"
+	attackType = re.search( 'SMTP', line)
+	if attackType:
+		return "SMTP server attack"
+	attackType = re.search( 'SNMP', line)
+	if attackType:
+		return "SNMP connection made"
+	attackType = re.search( 'SPYWARE-PUT', line)
+	if attackType:
+		return "Spyware"
+	attackType = re.search( 'SQL', line)
+	if attackType:
+		return "SQL exploit"
+	attackType = re.search( 'VOIP-SIP', line)
+	if attackType:
+		return "VIOP exploit"
+	attackType = re.search( 'WEB-ACTIVEX', line)
+	if attackType:
+		return "ActiveX exploit"
+	attackType = re.search( 'WEB-CGI', line)
+	if attackType:
+		return "CGI exploit"
+	attackType = re.search( 'WEB-CLIENT', line)
+	if attackType:
+		return "Attack against web user"
+	attackType = re.search( 'WEB-COLDFUSION', line)
+	if attackType:
+		return "ColdFusion exploit"
+	attackType = re.search( 'WEB-FRONTPAGE', line)
+	if attackType:
+		return "Frontpage exploit"
+	attackType = re.search( 'WEB-IIS', line)
+	if attackType:
+		return "Microsoft web server attack"
+	attackType = re.search( 'WEB-MISC', line)
+	if attackType:
+		return "Miscellaneous web exploit"
+	attackType = re.search( 'WEB-PHP', line)
+	if attackType:
+		return "PHP exploit"
+	attackType = re.search( 'PSNG_TCP_PORTSWEEP', line)
+	if attackType:
+		return "TCP portsweep"
+	attackType = re.search( 'NON-RFC DEFINED CHAR', line)
+	if attackType:
+		return "Pre-processor detects malicious network traffic"
+	attackType = re.search( 'OVERSIZE REQUEST-URI DIRECTORY', line)
+	if attackType:
+		return "Oversized request"
 	else:
 		return "Unknown"
 
@@ -210,6 +309,7 @@ def parseAttackType(line):
 #if all required info for the attack is found, parseAttackInfo() is called.
 def parseAttackLog(log_file):
 	
+	dbwrapper = initiateDBConnection()
 	while 1:
 		line = log_file.readline()
 		if not line:
@@ -228,7 +328,8 @@ def parseAttackLog(log_file):
 					attackType = parseAttackType(line)
 					if attackInfo != -1:
 						if attackType != "":
-							addNewAttackEntry(attackInfo, attackType, attackTime)
+							addNewAttackEntry(attackInfo, attackType, attackTime, dbwrapper)
+	dbwrapper.close()
 				#else:
 					#print("Foreign subnet detected: ignoring log entry.")
 
