@@ -1,0 +1,32 @@
+Overview:
+
+ReTiNA is a Real Time Network Analysis system that has the ability to detect
+nodes on a network, generate statistics on network traffic on that network,
+and also the ability to detect attacks as they occur on the network while 
+logging all of this information into a database in real time.
+
+To start ReTiNA first make sure that you have all of the following installed:
+	tcpdump
+	snort
+	nmap 5.51
+	python
+	mysql
+	Linux Command tr
+	Apache
+	python-mysqldb
+	
+
+After installing the above you will need to setup and configure with the
+correct configurations as shown in the database directory. You may also 
+need to configure snort an example of this can be seen in the 
+AttackDetection directory in the README file. It is advised that you read
+all documentation before trying to run the system for the first time.
+
+Running:
+
+To start ReTiNA you must call the ReTiNA.sh script as root. This script will
+start all the other modules by calling there start script as well. If you want
+to test individual components of ReTiNA you may go into that components directory
+and call the start script with the correct arguments as shown in the ReTiNA.sh
+script.
+

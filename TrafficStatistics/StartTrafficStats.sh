@@ -2,8 +2,10 @@
 
 killall -s USR2 tcpdump # Kill all curently running tcpdump calls
 
-tcpdump -i any -nn > ./testlogfile.txt & 
+tcpdump -i any -nn | python trafficStats.py ../teams.cfg 
 
-python trafficStats.py ../teams.cfg testlogfile.txt 
+sleep 5
+
+
 
 

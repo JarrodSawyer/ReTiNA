@@ -1,6 +1,4 @@
 README file for Node detection module of Real Time Network Analysis system
-Author: Michael King
-Date: 1 May 2010
 
 Overview:
 
@@ -22,6 +20,11 @@ by the user's ISP or the network administrator of any
 any scanned networks.  By using this system, the user
 agrees to take full responsibility for the actions of
 the node detection software.
+
+Note: For cyberstorm usage NodeDetection gets KOTH box
+information from xscore by calling a cgi script from
+xscore hosted on an Apache web-server. How this is done
+can be seen towards the top of the nmapNodeDet.sh.
 
 Installation:
 
