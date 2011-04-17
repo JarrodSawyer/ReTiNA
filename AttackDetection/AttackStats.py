@@ -15,8 +15,8 @@ import DatabaseWrapper
 import config
 
 #check for correct number of arguments
-if len(sys.argv) != 3:
-	print("usage: python AttackStats.py teams.cfg logfile.txt")
+if len(sys.argv) != 2:
+	print("usage: python AttackStats.py teams.cfg")
 	exit();
 
 #check for valid teams config
@@ -26,15 +26,6 @@ try:
 except IOError:
 	#failed to open file
 	print('Could not open file: %s' % sys.argv[1])
-	exit();
-
-#check for valid snort log
-try:
-	#check if the file exists by opening it
-	log_file = open(sys.argv[2], 'r')
-except IOError:
-	#failed to open file
-	print('Could not open file: %s' % sys.argv[2])
 	exit();
 
 
@@ -307,15 +298,15 @@ def parseAttackType(line):
 
 #main script loop, which reads the snort log one line at a time and finds new attack entries
 #if all required info for the attack is found, parseAttackInfo() is called.
-def parseAttackLog(log_file):
+def parseAttackLog():
 	
 	dbwrapper = initiateDBConnection()
 	while 1:
-		line = log_file.readline()
-		#if not line:
-		#	print("Reached end of log file")
-		#	break;
-		#pass
+		line = sys.stdin.readline()
+		if not line:
+			print("Reached end of log file")
+			exit();
+		pass
 		attackTimeEntry = re.search('(\d+\/\d+-\d+:\d+:\d+.\d+)', line)
 		if attackTimeEntry:
 			attackTime = attackTimeEntry.group()
@@ -334,7 +325,7 @@ def parseAttackLog(log_file):
 					#print("Foreign subnet detected: ignoring log entry.")
 
 team_info = createTeamInfoList(config_file)		#first parse the config and get the team info (name & subnet)
-parseAttackLog(log_file)					#this function call gets the process going
+parseAttackLog()					#this function call gets the process going
 
 
 
