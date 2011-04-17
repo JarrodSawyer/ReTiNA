@@ -22,7 +22,15 @@ REQUIREMENTS   (for Linux)
 Python:  "sudo apt-get install python"
 
 Snort: 	 "sudo apt-get install snort"
+
+Since: "sudo apt-get install since"
 --------------------------------------------------------------------------------
 RUNNING
 --------------------------------------------------------------------------------
 Simply running StartAttackDetection.sh should take care of everything needed to run AttackStats.py.  It should also call snort and pass all appropriate parameters to AttackStats.py
+
+--------------------------------------------------------------------------------
+SETTING UP SNORT
+--------------------------------------------------------------------------------
+Place the rules folder, the preproc_rules folder, the threshold.conf, and the snort.conf in the /etc/snort folder. Then, delete the files in /usr/lib/snort_dynamicrules/.
+Snort should then be ready to run.
