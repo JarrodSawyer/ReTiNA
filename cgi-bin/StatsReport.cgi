@@ -28,34 +28,40 @@ dbwrapper.login(dbinfo['user'], dbinfo['password'],dbinfo['db'])
 #gets the traffic stats from the database
 stats = dbwrapper.getStats(timestamp)
 
-#get the latest time stamp in the table
-latest_timestamp = stats[0][1]
+if stats:
 
-#The beggining of the XML to send off
-print "Content-Type: application/xml\n"
-print "<Statistics timestamp="+str(latest_timestamp)+">"
+	#get the latest time stamp in the table
+	latest_timestamp = stats[0][1]
 
-#Start up a counter for the while loop below
-count = 0
+        #The beggining of the XML to send off
+	print "Content-Type: application/xml\n"
+	print "<Statistics timestamp="+str(latest_timestamp)+">"
 
-#Get the size of the stats table
-statsSize = len(stats) 
+	#Start up a counter for the while loop below
+	count = 0
 
-teamList = [""]
+	#Get the size of the stats table
+	statsSize = len(stats) 
 
-#Loop through the list of stats and build XML to send off
-while (count < statsSize):
-      	try:
-		teamList.index(str(stats[count][2])) # Checks to see whether stats for the team have already been printed. 
-	except:
-		teamList.insert(count,str(stats[count][2])) # Stats have not been printed for the team
-		count=count + 1
-	else:
-		break # Stats have been printed so we are done
-	print "<team name=" + str(stats[count][2]) + ">"
-	print "<incoming=" + str(stats[count][3]) + "/>"
-	print "<outgoing=" + str(stats[count][4]) + "/>"
-	print "<total traffic=" + str(stats[count][5]) + "/>"
-	print "</team>"
+	teamList = [""]
 
-print "</Statistics>"
+	#Loop through the list of stats and build XML to send off
+	while (count < statsSize):
+		try:
+			teamList.index(str(stats[count][2])) # Checks to see whether stats for the team have already been printed. 
+		except:
+			teamList.insert(count,str(stats[count][2])) # Stats have not been printed for the team
+			count=count + 1
+		else:
+			break # Stats have been printed so we are done
+			print "<team name=" + str(stats[count][2]) + ">"
+			print "<incoming=" + str(stats[count][3]) + "/>"
+			print "<outgoing=" + str(stats[count][4]) + "/>"
+			print "<total traffic=" + str(stats[count][5]) + "/>"
+			print "</team>"
+
+	print "</Statistics>"
+else:
+	print "Content-Type: application/xml\n"
+	print "<Statistics timestamp=\"" + str(timestamp) + "\">"
+	print "</Statistics>"
