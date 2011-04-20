@@ -28,14 +28,14 @@ dbwrapper.login(dbinfo['user'], dbinfo['password'],dbinfo['db'])
 #gets the traffic stats from the database
 stats = dbwrapper.getStats(timestamp)
 
-if stats:
+if stats != 0:
 
 	#get the latest time stamp in the table
 	latest_timestamp = stats[0][1]
 
         #The beggining of the XML to send off
 	print "Content-Type: application/xml\n"
-	print "<Statistics timestamp="+str(latest_timestamp)+">"
+	print "<Statistics timestamp=\""+str(latest_timestamp)+"\">"
 
 	#Start up a counter for the while loop below
 	count = 0
@@ -48,17 +48,17 @@ if stats:
 	#Loop through the list of stats and build XML to send off
 	while (count < statsSize):
 		try:
-			teamList.index(str(stats[count][2])) # Checks to see whether stats for the team have already been printed. 
+			teamList.index(str(stats[count][2])) # Checks to see whether stats for the team have already been printed.
+			break # Stats have been printed so we are done
 		except:
 			teamList.insert(count,str(stats[count][2])) # Stats have not been printed for the team
-			count=count + 1
-		else:
-			break # Stats have been printed so we are done
-			print "<team name=" + str(stats[count][2]) + ">"
-			print "<incoming=" + str(stats[count][3]) + "/>"
-			print "<outgoing=" + str(stats[count][4]) + "/>"
-			print "<total traffic=" + str(stats[count][5]) + "/>"
+			
+			print "<team name=\"" + str(stats[count][2]) + "\">"
+			print "<incoming traffic=\"" + str(stats[count][3]) + "\"/>"
+			print "<outgoing traffic=\"" + str(stats[count][4]) + "\"/>"
+			print "<total traffic=\"" + str(stats[count][5]) + "\"/>"
 			print "</team>"
+			count=count + 1 
 
 	print "</Statistics>"
 else:
