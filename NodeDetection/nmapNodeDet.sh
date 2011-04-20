@@ -6,13 +6,18 @@
 #
 #   By: Michael King
 #   2010
+#
+#   Updated by: Jarrod Sawyer
+#   Date: 4/20/2011
 #############################################################################
 
 debug=0
 SCAN="nmap -O --fuzzy --max-os-tries=1"
 config=./nodes.conf
 logfile=./log/nodeLog.log
-if [ -a "$logfile" ]; then
+
+# If a logfile already exists save it and add the date/time to the file name
+if [ -a "$logfile" ]; then 
     suf=`date +%s`
     mv "$logfile" "$logfile.$suf"
 fi
@@ -306,7 +311,7 @@ echo "Not cached $ip"
 	echo "OS: ${node[1]}" >> $logfile
 	if [[ "${node[3]}" == "KoTH" ]]; then
 	    #tm=`curl -D - -v ftp://${node[0]}:21 2> /dev/null | grep '^220' | tee asdf | egrep -w -i -o "$team_string"`
-	    #tm=`echo $tm | tr [A-Z] [a-z]`
+	    #tm=`echo $tm | tr [A-Z] [a-z]`              BACKUP CALLS IF XSCORE CALL DOES NOT WORK
 	    echo "Team: ${ipOwnerMap[${node[0]}]}" >> $logfile # Get the owner of the current KOTH box
 	    
 	else
