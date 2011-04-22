@@ -9,7 +9,6 @@
 
 i=0
 
-#rm *.cache
 while [ 1 ];
 do
 	let "i++"

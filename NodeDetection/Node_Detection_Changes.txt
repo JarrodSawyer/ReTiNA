@@ -1,3 +1,10 @@
+Author: Jarrod Sawyer
+Date: 4/22/2011
+
+Changed made to Node Detection module by 2011
+Senior Capstone class.
+
+
 Node Detection
 
 1. Changed the grep search string for the ping sweep nmap call. The output for 
@@ -5,8 +12,6 @@ Node Detection
    string was updated to account for this change.
 
 2. Changed the way that the script was checking for ownership of KOTH boxes. 
-   The team names were hard coded. We added a hash table to the nodes.conf file 
-   that has each teams color for a key and the teams "name" for the value. We
-   now ftp to the KOTH box, get the message of the day, and check each team's name
-   against the team name in the message of the day. Ownership is then assigined based
-   on the message of the day.   
+   The team names were hard coded. The nmapNodeDet.sh script now calls a cgi
+   script hosted by XScore that provides the KOTH boxes that are up and their
+   owners.

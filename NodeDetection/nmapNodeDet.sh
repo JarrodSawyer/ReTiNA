@@ -1,7 +1,7 @@
 #!/bin/bash
-#nmap based active node detection featuring OS detection 
+#Nmap based active node detection featuring OS detection 
 #and limited port scanning.  Designed to be used with the
-#Cyberstorm Network Visualization system.
+#Cyber Storm Network Visualization system.
 #See the nodes.conf file to customize teams, IP addresses and ports
 #
 #   By: Michael King
@@ -23,41 +23,41 @@ if [ -a "$logfile" ]; then
 fi
 source $config
 
-#Get KOTH boxes from XSCORE
+# Get KOTH boxes from XSCORE
 
 kothBoxes="10.0.0.15 White:10.0.0.3 Red:10.0.0.100 Blue:10.0.0.78 White" # Need to call XSCORE CGI script here
 
 # Splits the string from XScore at the colons
 ipOwner=($(echo $kothBoxes | sed -e 's/'":"'/\n/g' | while read line; do echo $line | sed 's/[\t ]/'":"'/g'; done))
 
-#Replaces the colends with spaces
+# Replaces the colons with spaces
 for (( i = 0; i < ${#ipOwner[@]}; i++ )); do
   ipOwner[i]=$(echo ${ipOwner[i]} | sed 's/'":"'/ /')
 done
 
-declare -A ipOwnerMap # Holds the ip of the KOTH box and its correponding owner
+declare -A ipOwnerMap # Holds the IP of the KOTH box and its corresponding owner
 
 i=0
 
-#Goes through all of the ip/owner pairs and builds a list of the ips and the map of the two
+# Goes through all of the IP/owner pairs and builds a list of the IPs and the map of the two
 while [  $i -lt ${#ipOwner[@]} ]
 do
     owner=`echo ${ipOwner[$i]} | cut -d' ' -f2` # Owner                                                                                                                               
     ip=`echo ${ipOwner[$i]} | cut -d' ' -f1` # IP                                                                                                                                             
  
     ipOwnerMap[$ip]=$owner
-    ip=`echo ${ip} | cut -d'.' -f4`
-    ip=".$ip"
+    ip=`echo ${ip} | cut -d'.' -f4` # Gets the last octet of the IP address. So if it is 10.0.0.69 gets 69.
+    ip=".$ip" # Makes it .69
     
-    ipList[$i]=$ip
+    ipList[$i]=$ip 
     let i=$i+1
 done
 
-scanPorts=`echo ${PORTS[@]} | tr ' ' ','`
-for tname in ${TEAMS[@]}
+scanPorts=`echo ${PORTS[@]} | tr ' ' ','` # Ports to scan
+for tname in ${TEAMS[@]} # Main Loop
 do
     team="$tname"
-    #get variables holding ip information
+    # Get variables holding ip information
     eval sub=\$"${team}_SUB"
     eval scanIPs=\$"{${team}_SCAN_IPS[@]}"
 
@@ -79,7 +79,7 @@ fi
 
     scanPrefs=() 
     
-    #compile IPs to be scanned
+    # Compile IPs to be scanned
     for ip in ${scanIPs[@]}
     do
 	scanPrefs=( "${scanPrefs[@]}" "$sub$ip" )
@@ -92,12 +92,12 @@ fi
 	noScanPrefs=( "${noScanPrefs[@]}" "$sub$ip" )
     done
     
-    #Get all IPs on subnet
+    # Get all IPs on subnet
     echo $sub
     iplist=`nmap -n -sP "$sub.2-254" | grep "Nmap scan report" | cut -d' ' -f5`    
     fullList=( "${scanPrefs[@]}" "${noScanPrefs[@]}" "${iplist[@]}" )     
 
-    #Combine config IPs with nmap scan IPs and remove duplicates
+    # Combine config IPs with nmap scan IPs and remove duplicates
     fullList=( `echo "${fullList[@]}" | tr " " "\n" | sort -u` )
 
 if [ $debug -eq 0 ];then
@@ -117,14 +117,14 @@ fi
 	    cacheArr[index]="$line"
 	    let index++
         done < "$cache"
-        #delete cache since new one will be written after OS detection
+        # Delete cache since new one will be written after OS detection
         rm "$cache"
     fi
 	if [ $debug -eq 0 ]; then
 		echo "CacheArr: ${cacheArr[@]}"
 		echo ""
 	fi
-    #remove cached IPs no longer active
+    # Remove cached IPs no longer active
     TIME=`date +%s`
     for (( i=0; i<${#cacheArr[@]};i++ ))
     do
@@ -132,12 +132,12 @@ fi
 if [ $debug -eq 0 ]; then
         echo "CIP[0]: ${cip[0]}"
 fi
-	found=1 #false
+	found=1 # False
         for ip in ${fullList[@]}
         do
 	    if [[ "${cip[0]}" == "$ip" && ${cip[1]} > $TIME ]]; then
    		echo FOUND
-		found=0 #true
+		found=0 # True
 		break
 	    fi
 	done
@@ -145,20 +145,20 @@ fi
 	    cacheArr[$i]=""
 	fi
     done
-    #scan through IPs
+    # Go through list of found IPs
     for ip in ${fullList[@]}
     do
 	if [ $debug -eq 0 ]; then
 	echo "IP is $ip"
 	fi
-	#initialize variables
+	# Initialize variables
 	scanArr=()
 	servArr=()
 	ipFound="false"
 	isCached="false"
 	toCache="true"
 	cacheIP=()
-	#Check to see if IP is in the cache
+	# Check to see if IP is in the cache
 	for (( i=0; i<${#cacheArr[@]}; i++ ))
 	do
 	    #NOTE: cacheIP format is ( IP TimeToDie OS )
@@ -170,25 +170,25 @@ fi
 	    fi
 	done
 echo "ISCACHE: $isCached"
-	#checking for match in port scanned IPs
+	# Checking for match in port scanned IPs
 	for scanIP in ${scanPrefs[@]}
 	do
 	    if [ "$ip" == "$scanIP" ]; then 
 		if [ $debug -eq 0 ]; then
 		    echo Scanip
 		fi	
-		    scanArr=( `$SCAN -p$scanPorts $ip | egrep '^Running|^Too|^[0-9]{2,5}'` )
-		nodeType=${ntypeArr[0]}
-		ipFound="true" #I've found it!
-		toCache="false" #But I don't want to cache it!
-				#Time of port scans is roughly the same 
-				#as the time to OS scan, not worth caching 
+		scanArr=( `$SCAN -p$scanPorts $ip | egrep '^Running|^Too|^[0-9]{2,5}'` ) # Scans for IPs designated in conf file 
+		nodeType=${ntypeArr[0]}                                                # as IPs to scan ports on
+ 		ipFound="true" # I've found it!
+		toCache="false" # But I don't want to cache it!
+				# Time of port scans is roughly the same 
+				# as the time to OS scan, not worth caching 
 		break
 	    fi
 	done
 	
 	if [ "$ipFound" == "false" ]; then 
-        #checking for match in non-port scanned IPs
+        # Checking for match in non-port scanned IPs
 	    for noScanIP in ${noScanPrefs[@]}
 	    do
 		if [ "$ip" == "$noScanIP" ]; then
@@ -196,7 +196,7 @@ echo "ISCACHE: $isCached"
 			echo "OS on non-port Scan"
 			echo "isCached: $isCached"
 			echo "TIME: $TIME  TTD: ${cacheIP[1]}"
-			scanArr=( `$SCAN $ip | egrep '^Running|^Too'` )
+			scanArr=( `$SCAN $ip | egrep '^Running|^Too'` ) # In depth scan for IPs not on the port scan list
 			cacheIP[1]=$(($TIME+$NO_SCAN_IPS_TTD))
 		     
 		    fi		
@@ -207,14 +207,14 @@ echo "ISCACHE: $isCached"
 		fi
 	    done
 	fi
-	if [ "$ipFound" == "false" ]; then #if not in the pref lists
+	if [ "$ipFound" == "false" ]; then # If not in the pref lists
 	    if [ "$prefsFound" -eq "$MAXNODE" ]; then 
 		continue
 	    fi
 	    if [[ "$isCached" == "false" || $TIME -gt ${cacheIP[1]} ]]; then 
 		echo "OS on non-pref"
 		echo "TIME: $TIME"
-		scanArr=( `$SCAN $ip | egrep '^Running|^Too'` )
+		scanArr=( `$SCAN $ip | egrep '^Running|^Too'` ) # In depth scan for IPs not on a preference list
 		cacheIP[1]=$(($TIME+$CACHE_TTD))
 	    fi		
 	    
@@ -232,7 +232,7 @@ echo "ISCACHE: $isCached"
 	    for (( i=0; i<len; ))
 	    do
 		case ${scanArr[$i]} in
-		    Running* )
+		    Running* ) # Determining Operating System
 			echo "Running input: ${scanArr[*]:i+1:$len-i+1}"
 			len=${#scanArr[@]}
 			opsys="${scanArr[@]:i+1:$len-i+1}"
@@ -244,11 +244,11 @@ echo "ISCACHE: $isCached"
 			echo "Opsys: $opsys"
 			break
 			;;
-		    Too* )
+		    Too* ) # Unknown OS
 			opsys="Unknown"
 			break
 			;;
-		    No* )
+		    No* ) # Unknown OS
 			opsys="Unknown"
 			break
 			;;
@@ -257,17 +257,17 @@ echo "ISCACHE: $isCached"
 				echo "Add services here ${scanArr[i]}"
 			fi	
  		case ${scanArr[i+1]} in
-			    open)
+			    open) # Services
 				stat=UP
 				;;
-			    *)
+			    *) # Services
 				stat=DOWN
 				;;
 			esac
 			servArr=( "${servArr[@]}" "${scanArr[i+2]} $stat" )
 			i=$i+3
 			;;
-		    *)
+		    *) # Everything else
 			echo Default??
 			echo "${scanArr[i]}"
 			let i++
@@ -286,7 +286,7 @@ echo "Not cached $ip"
 	    cacheIP[2]="$opsys"
 	    cacheArr[${#cacheArr[@]}]="${cacheIP[@]}"
 	fi
-    #assemble and print node
+    # Assemble and print node to log file
 	    
 	node=( "$ip" "$opsys" "$team" "$nodeType" "${servArr[@]}" )
 
@@ -299,27 +299,27 @@ echo "Not cached $ip"
 	fi
 	
 	
-    #note that the node array format is:
-    #IP
-    #OS
-    #TEAM
-    #NODE TYPE
-    #SERVICE STATUS  *optional
+    # Note that the node array format is:
+    # IP
+    # OS
+    # TEAM
+    # NODE TYPE
+    # SERVICE STATUS  *optional
 	
-    #Write IP, OS, and Team info
+    # Write IP, OS, and Team info
 	echo "IP: ${node[0]}" >> $logfile
 	echo "OS: ${node[1]}" >> $logfile
 	if [[ "${node[3]}" == "KoTH" ]]; then
 	    #tm=`curl -D - -v ftp://${node[0]}:21 2> /dev/null | grep '^220' | tee asdf | egrep -w -i -o "$team_string"`
-	    #tm=`echo $tm | tr [A-Z] [a-z]`              BACKUP CALLS IF XSCORE CALL DOES NOT WORK
+	    #tm=`echo $tm | tr [A-Z] [a-z]`                                  BACKUP CALLS IF XSCORE CALL DOES NOT WORK
 	    echo "Team: ${ipOwnerMap[${node[0]}]}" >> $logfile # Get the owner of the current KOTH box
 	    
 	else
-	    echo "Team: ${node[2]}" >> $logfile
+	    echo "Team: ${node[2]}" >> $logfile  # If not KOTH base owner on IP address
 	fi
 	echo "NodeType: ${node[3]}" >> $logfile
 	if [ ${#node[@]} -gt 4 ]; then
-            for (( i=4; i<${#node[@]}; i++ ));
+            for (( i=4; i<${#node[@]}; i++ )); # Print services
 	    do
 		echo "Service: ${node[$i]}" >> $logfile
 	    done
@@ -328,10 +328,10 @@ echo "Not cached $ip"
 	fi
 	echo "" >> $logfile
 	
-    done #for ip in ${fullList[@]}
-    #Write cache   
+    done # For ip in ${fullList[@]}
+    # Write found nodes to cache   
     for line in "${cacheArr[@]}"
     do
 	[[ $line != "" ]] && echo "$line" >> "$cache"
     done
-done #for ((i in TEAM))
+done #for ((i in TEAM)) Main Loop End

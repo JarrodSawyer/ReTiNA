@@ -8,7 +8,7 @@ on a network, as well as providing OS information
 and limited port activity information.
 
 The system is intended to be used as a part of the
-Cyberstorm System but can be used as a stand-alone
+Cyber Storm System but can be used as a stand-alone
 application.
 
 Note:  This system makes use of Nmap for its network
@@ -21,10 +21,14 @@ any scanned networks.  By using this system, the user
 agrees to take full responsibility for the actions of
 the node detection software.
 
-Note: For cyberstorm usage NodeDetection gets KOTH box
-information from xscore by calling a cgi script from
-xscore hosted on an Apache web-server. How this is done
+Note: For Cyber Storm usage NodeDetection gets KOTH box
+information from XScore by calling a cgi script from
+XScore hosted on an Apache web-server. How this is done
 can be seen towards the top of the nmapNodeDet.sh.
+
+Note: nodeLog.log is a sample of the output from
+nmapNodeDet.sh. The log files used during execution
+are stored in the log folder.
 
 Installation:
 
@@ -40,3 +44,5 @@ user to modify team names, IP addresses, ports to scan,
 and node types for each team.  Detailed instructions for
 modifying nodes.conf can be found in the config file.
 
+nmapNodeDet.sh runs the Node Detection module and NodeDB.py
+parses the Node Detection output and puts it into the database.
