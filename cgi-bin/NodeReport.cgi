@@ -1,4 +1,8 @@
 #!/usr/bin/env python2.6
+#This file is used to update the Nodes by querying the Database
+#and getting each line in the database with the next sequencial
+#time stamp. It then prints the stats in a xml format in which 
+#the caller of the file will parse.
 
 import sys
 sys.path.append("../database")

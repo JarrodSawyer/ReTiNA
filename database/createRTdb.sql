@@ -2,13 +2,13 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
-USE `mydb`;
+CREATE SCHEMA IF NOT EXISTS `ReTiNAdb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+USE `ReTiNAdb`;
 
 -- -----------------------------------------------------
--- Table `mydb`.`traffic_stats`
+-- Table `ReTiNAdb`.`traffic_stats`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`traffic_stats` ;
+DROP TABLE IF EXISTS `ReTiNAdb`.`traffic_stats` ;
 
 CREATE TABLE IF NOT EXISTS `traffic_stats` (
   `id` int(11) NOT NULL auto_increment,
@@ -22,9 +22,9 @@ CREATE TABLE IF NOT EXISTS `traffic_stats` (
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`attacks`
+-- Table `ReTiNAdb`.`attacks`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`attacks` ;
+DROP TABLE IF EXISTS `ReTiNAdb`.`attacks` ;
 
 CREATE TABLE IF NOT EXISTS `attacks` (
   `idattacks` int(11) NOT NULL auto_increment,
@@ -41,9 +41,9 @@ CREATE TABLE IF NOT EXISTS `attacks` (
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`nodestats`
+-- Table `ReTiNAdb`.`nodestats`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`nodestats` ;
+DROP TABLE IF EXISTS `ReTiNAdb`.`nodestats` ;
 
 
 CREATE TABLE IF NOT EXISTS `nodestats` (
