@@ -75,7 +75,7 @@ class dbconnect:
 			#Get cursor for query execution
 			cursor = self.conn.cursor ()
 
-			query = "INSERT INTO traffic_stats (traffic_timestamp, team_name, incoming, outgoing, total_traffic) VALUES (" + str(timestamp) + ",\"" + teamName + "\"," + str(incoming) + "," + str(outgoing) + "," + str(total_outgoing) + "," + str(total_incoming) + " );" 
+			query = "INSERT INTO traffic_stats (traffic_timestamp, team_name, incoming, outgoing, total_outgoing, total_incoming) VALUES (" + str(timestamp) + ",\"" + teamName + "\"," + str(incoming) + "," + str(outgoing) + "," + str(total_outgoing) + "," + str(total_incoming) + " );" 
 			
 			#Insert into Stats table with given information.
 			print query
