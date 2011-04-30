@@ -4,7 +4,29 @@
 # Updated by: Jarrod Sawyer
 # Date: April 27, 2011
 # 
-# Installs all packages needed by ReTiNA to run.
+# Installs all packages needed by ReTiNA to run and moves
+# the snort configuration files and rules folders to the 
+# snort directory (/etc/snort).
+#
+# Packages Installed:
+# 
+#                snort
+#                since
+#                nmap
+#                tcpdump
+#                python
+#                mysql-server
+#                apache2
+#                phpmyadmin
+#                python-mysqldb
+#
+# Files Moved:
+#
+#                snort.conf
+#                Threshold.conf
+#                rules/ 
+#                preproc_rules/       
+#
 # Must be run as root
 ####################################################
 
