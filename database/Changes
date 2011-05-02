@@ -2,11 +2,19 @@ Changes Made to the database folder:
 
 4/24/2011: Daniel Savage
 	   
+
 		createRTdb.sql:  
 				`mydb` replaced with `ReTiNAdb`
 
 		config.py:	
-				`mydb` replaced with `ReTiNAdb`
+				`mydb` replaced with `ReTiNAdb
+	
+		DatabaseWrapper.py:
+				addStats() added to take parameters for timestamp, incoming, outgoing, total_outgoing, 
+						and teamName.  This created a more general set of information instead of tracking
+						what goes where, we look at each node individually
+
+		 `
 
 
 					

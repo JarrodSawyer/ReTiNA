@@ -1,0 +1,17 @@
+CGI-SCRIPTS
+Daniel Savage
+
+--------------------------------------------------------------------------------
+HOW THEY WORK
+--------------------------------------------------------------------------------
+Each file in this folder is used to update either attacks, nodes, or stats, by sending a query to the database and getting each line in the database with the next sequential time stamp.  They then print the stats in an XML format for the caller of the file to parse.
+
+--------------------------------------------------------------------------------
+REQUIREMENTS   (for Linux)
+--------------------------------------------------------------------------------
+Python:  "sudo apt-get install python"
+
+--------------------------------------------------------------------------------
+RUNNING
+--------------------------------------------------------------------------------
+All cgi-scripts are called by other files in ReTiNA to work as part of the whole.  They can be run individually however, but this would offer no real value and is simply for testing purposes. 

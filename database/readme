@@ -1,0 +1,26 @@
+Database
+Daniel Savage
+
+All files here require Python
+
+(sudo apt-get install python)
+
+--------------------------------------------------------------------------------
+Config.py
+--------------------------------------------------------------------------------This file is used to help in building the database when ReTiNA doesn't have one created already.  This information is passed into the program to set the fields for the database
+
+
+--------------------------------------------------------------------------------
+DatabaseWrapper.py
+--------------------------------------------------------------------------------A wrapper to the MYSQLdb module that allows you to easily add new events to the database when they happen.  It is easily extensible and is easily modified to fit future needs.
+
+MYSQLdb must be installed in order for it to work though, for information on iinstallation look at http://www.kitebird.com/articles/pydbapi.html
+
+Once you have installed MYSQLdb you simply need to import this file, create a new dbconnect object (passing in the host IP for the database), 
+call the login function (passing it username, password, and database schema (currently we are using cyberstorm for this), and then simply call addEvent anytime you
+need to add a new event to the database.
+
+--------------------------------------------------------------------------------
+createRTdb.sql
+--------------------------------------------------------------------------------SQL file called to create tables for ReTiNA for traffic_stats, attack detection, and node detection
+
