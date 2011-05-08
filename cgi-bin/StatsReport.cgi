@@ -56,7 +56,8 @@ if stats != 0:
 			print "<team name=\"" + str(stats[count][2]) + "\">"
 			print "<incoming traffic=\"" + str(stats[count][3]) + "\"/>"
 			print "<outgoing traffic=\"" + str(stats[count][4]) + "\"/>"
-			print "<total traffic=\"" + str(stats[count][5]) + "\"/>"
+			print "<total outgoing=\"" + str(stats[count][5]) + "\"/>"
+			print "<total incoming=\"" + str(stats[count][6]) + "\"/>"
 			print "</team>"
 			count=count + 1 
 

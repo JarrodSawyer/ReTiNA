@@ -22,6 +22,10 @@ need to configure snort an example of this can be seen in the
 AttackDetection directory in the README file. It is advised that you read
 all documentation before trying to run the system for the first time.
 
+Note: You must add the correct team colors/names and subnets into the teams.cfg 
+file so that the modules know what subnets to look for and the team associated with 
+them.
+
 Running:
 
 To start ReTiNA you must call the ReTiNA.sh script as root. This script will

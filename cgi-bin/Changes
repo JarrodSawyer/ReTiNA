@@ -3,8 +3,16 @@ Changes Made to the cgi-bin folder:
 4/24/2011: Daniel Savage
             
 				NodeReport.cgi:
-									Description added at the start of file.
+						Description added at the start of file.
+		
+						XML format fixed to be compatible with changes made to the addStats function inside
+							DatabaseWrapper.py
+									
 
 
 				AttackReport.cgi:
 	   								Description added at the start of file.
+				
+				config.py:
+						removed from folder and only stored in database folder
+

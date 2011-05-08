@@ -1,7 +1,7 @@
 Traffic Statistics:
 
 1. Changed the stats table of the ReTiNA database to traffic_stats. Also changed the fields of the table
-   to id, traffic_timestamp, team_name, incoming, and outgoing. Also changed the createRTdb.sql script
+   to id, traffic_timestamp, team_name, incoming, outgoing, total_outgoing, and total_incoming. Also changed the createRTdb.sql script
    so that it creates the database with these changes.
 
 2. Changed the DatabaseWrapper.py addStats method. The method was changed to account for the changes made
@@ -16,16 +16,22 @@ Traffic Statistics:
    
    <Statistics timestamp="123456789">
    <team name="white">
-   <incoming packets="1234" />
-   <outgoing packets="4321" />
+   <incoming traffic="1234" />
+   <outgoing traffic="4321" />
+   <total outgoing="789456" />
+   <total incoming="654987"/>
    </team>
    <team name="red">
    <incoming packets="1234" />
    <outgoing packets="4321" />
+   <total outgoing="789456" />
+   <total incoming="654987"/>
    </team>
    <team name="blue">
    <incoming packets="1234" />
    <outgoing packets="4321" />
+   <total outgoing="789456" />
+   <total incoming="654987"/>
    </team>
    </Statistics> 
 

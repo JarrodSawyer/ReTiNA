@@ -1,0 +1,16 @@
+Attack Detection:
+
+1. Added more snort rules
+
+2. Change Attack Detection to use the database wrapper instead of implementing another python file to access the database
+
+3. Change the name of the script to start attack detection from cyberstormsince.sh to StartAttackDetection.sh to be more uniform
+
+4. Added parsing for more attack types 
+
+5. Added config file for teams, "../teams.cfg"
+
+6. Removed files such as: bla, bla1, blankLog.txt, and other log files (xml generation is now done by cgi script "AttackReport.cgi" in the ../cgi-bin folder
+
+
+

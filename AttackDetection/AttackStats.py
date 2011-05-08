@@ -10,7 +10,7 @@
 import sys
 import time
 import re
-sys.path.append("../database")
+sys.path.append("../database") #appends the system path to include the database directory so that we can use the database wrapper
 import DatabaseWrapper
 import config
 
@@ -35,7 +35,7 @@ def createTeamInfoList(config_file):
 	
 	team_info = []	#list containing team names and subnets
 	while 1:
-		line = config_file.readline()
+		line = config_file.readline()                                   #read a line from the config file
 		if not line:
 			break
 		pass 
@@ -113,12 +113,12 @@ def addNewAttackEntry(attackInfo, attackType, attackTime, dbwrapper):
 	#print("attack type: %s" % attackType)
 	#print("attack time: %s" % attackTime)
 	
-	dbwrapper.addAttack(attacker_ip, attacker_team, receiver_ip, receiver_team, attackType, attackTime, timetodie, now)
+	dbwrapper.addAttack(attacker_ip, attacker_team, receiver_ip, receiver_team, attackType, attackTime, timetodie, now) #adds the detected attack to the database
 
 def initiateDBConnection():
-	dbinfo = config.database
-	dbwrapper = DatabaseWrapper.dbconnect(dbinfo['host'])
-	dbwrapper.login(dbinfo['user'], dbinfo['password'],dbinfo['db'])
+	dbinfo = config.database #get the database from the config file
+	dbwrapper = DatabaseWrapper.dbconnect(dbinfo['host']) #try to connect to the database
+	dbwrapper.login(dbinfo['user'], dbinfo['password'],dbinfo['db']) #login to the database with the correct login info
 	return dbwrapper
 
 #parses the given snort log line and determines attack type based on keywords.  Returns "Unknown" if no keywords are found
@@ -302,26 +302,26 @@ def parseAttackType(line):
 #if all required info for the attack is found, parseAttackInfo() is called.
 def parseAttackLog():
 	
-	dbwrapper = initiateDBConnection()
+	dbwrapper = initiateDBConnection() #connect to the database
 	while 1:
-		line = sys.stdin.readline()
-		if not line:
+		line = sys.stdin.readline()   #read a line from snort outputing to standard in for parsing
+		if not line:                  
 			print("Reached end of log file")
 			exit();
 		pass
-		attackTimeEntry = re.search('(\d+\/\d+-\d+:\d+:\d+.\d+)', line)
+		attackTimeEntry = re.search('(\d+\/\d+-\d+:\d+:\d+.\d+)', line) #Searches the line for the attack time
 		if attackTimeEntry:
 			attackTime = attackTimeEntry.group()
 			#print(attackTimeEntry.group())
 			attackIPs = re.search('(\d*)[.]{1}(\d*)[.]{1}(\d*)[.]{1}(\d*)[:]*(\d*) -> (\d*)[.]{1}(\d*)[.]{1}(\d*)[.]{1}(\d*)', line)	#get ip info: "10.0.2.10:1108 to 10.0.2.1:38181"
-			if attackIPs:
+			if attackIPs: #if we find the attackIPs then continue
 				#print(attackIPs.group())
 				attackInfo = parseAttackInfo(attackIPs.group())	#returns list containing attacker ip, attacker team, receiver ip, receiver team
 				if attackInfo != -1:
-					attackType = parseAttackType(line)
+					attackType = parseAttackType(line) #Parses to see what type of attack we have encountered
 					if attackInfo != -1:
 						if attackType != "":
-							addNewAttackEntry(attackInfo, attackType, attackTime, dbwrapper)
+							addNewAttackEntry(attackInfo, attackType, attackTime, dbwrapper) #add the new attack entry to the database
 	dbwrapper.close()
 				#else:
 					#print("Foreign subnet detected: ignoring log entry.")
