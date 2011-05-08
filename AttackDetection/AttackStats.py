@@ -64,13 +64,15 @@ def parseAttackInfo(ip_to_ip):
 		space_index = ip_to_ip.find(" ")			#find the first space
 		
 		attacker_ip = ip_to_ip[ :space_index ]			#substring out acttacker ip: "10.0.0.110" (and possibly a port)
-		attacker_ip = attacker_ip[ :attacker_ip.find(":") ]	#substring off the port if there is one
+		attacker_ip = attacker_ip[ :attacker_ip.rfind(":") ]	#substring off the port if there is one
 		receiver_ip = ip_to_ip[ (space_index+4): ]		#substring out receiver ip: "10.0.2.11" (and possibly a port)
 		receiver_ip = receiver_ip[ :receiver_ip.find(":") ]
 		#print("attacker ip: %s"  % attacker_ip);
 		#print("receiver ip: %s"  % receiver_ip);
 		attacker_subnet = attacker_ip[ :attacker_ip.rfind(".") ]		#substring relevant subnet info: "10.0.2"
+		attacker_subnet = attacker_subnet[ :attacker_subnet.rfind(".") ]	#substring relevant subnet info: "10.0"
 		receiver_subnet = receiver_ip[ :receiver_ip.rfind(".") ]
+		receiver_subnet = receiver_subnet[ :receiver_subnet.rfind(".") ]
 		#print("attacker subnet: %s"  % attacker_subnet);
 		#print("receiver subnet: %s"  % receiver_subnet);
 		attacker_team = getTeamBySubnet(attacker_subnet)		#get the team name associated with the given subnet
